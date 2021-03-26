@@ -16,8 +16,10 @@ The purpose of this repo is to:
 - Provide Day 1 GitOps to setup cluster in uniform "fresh" status
 
 ## Architecture
+- Domain is registered in AWS with hosted zone
 - Review the install-config.yaml file
   - The default set in this repo is a 3 node cluster that combines Control Plane nodes with compute nodes, because $$$
+  - If you use outside of this project, you may also want to change the cluster name
 
 ## Workflow
 - To deploy OCP4.x
