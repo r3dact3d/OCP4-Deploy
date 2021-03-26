@@ -1,0 +1,35 @@
+name: Deploy OCP 4.x IPI to AWS 
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'deploy.md'
+jobs:
+  Setup:
+    name: Setup OpenShift Installer Binary
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - name: Setup Working Directory for OCP Install 
+        run: perl -pi -e 's/PULL_SECRET/${{ secrets.PULL_SECRET }}/' install-config.yaml
+      - run: cat install-config.yaml
+      - run: mkdir ~/ocp-artifact; cp install-config.yaml ~/ocp-artifact/
+        
+      - name: Install OpenShift CLI tools
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          openshift-install: "4.7.2"
+          
+      - name: Create OpenShift Cluster
+        run: openshift-install create cluster --dir=~/ocp-artifact
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
+          
+      - name: Save Artifacts for Destroy
+        uses: actions/upload-artifact@v2
+        with:
+          name: ocp-artifact
+          path: ~/ocp-artifiact
