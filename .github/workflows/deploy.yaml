@@ -46,6 +46,7 @@ jobs:
       
       - name: Deploy ArgoCD
         run: |
+          export KUBECONFIG=ocp-artifact/auth/kubeconfig
           oc create namespace argocd
           oc apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
           oc patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
