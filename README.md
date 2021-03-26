@@ -5,6 +5,7 @@ Repo for deploying OCP to AWS
 
 - [Purpose](#purpose)
 - [Workflow](#workflow)
+- [Important](#important)
 - [TODO](#todo)
 
 ## Purpose
@@ -26,6 +27,10 @@ The purpose of this repo is to:
   - Validate artifact for the cluster is still available
   - Ensure GitHub Secrets for AWS creds are created and valid
   - Create PR to merge destroy.md to main after adding name and date to list
+
+## Important
+- During the *deploy* workflow the artifacts around the AWS resources that are deployed are needed for the *destroy* workflow.  
+- The artifacts are uploaded for only 90 days and will need to be *manually* downloaded if it's not planned to *destroy* the cluster within that retention period.
 
 ## TODO
 - Add OCP openshift-installer version as variable
