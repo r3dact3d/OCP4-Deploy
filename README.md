@@ -4,6 +4,7 @@ Repo for deploying OCP to AWS
 ## Content
 
 - [Purpose](#purpose)
+- [Architecture](#architecture)
 - [Workflow](#workflow)
 - [Important](#important)
 - [TODO](#todo)
@@ -13,6 +14,10 @@ The purpose of this repo is to:
 - Provide a CI/CD method to deploy an OCP4 cluster
 - Automated way to destroy cluster
 - Provide Day 1 GitOps to setup cluster in uniform "fresh" status
+
+## Architecture
+- Review the install-config.yaml file
+  - The default set in this repo is a 3 node cluster that combines Control Plane nodes with compute nodes, because $$$
 
 ## Workflow
 - To deploy OCP4.x
