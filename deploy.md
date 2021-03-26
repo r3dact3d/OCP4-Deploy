@@ -2,4 +2,4 @@
 
 Please put name and date of deploy below:
 
-Brady 03-25-2021 Fixed AWS Secret
+Brady 03-25-2021 
