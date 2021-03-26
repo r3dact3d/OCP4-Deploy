@@ -12,9 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@main
       - name: Setup Working Directory for OCP Install 
-        run: perl -pi -e 's/PULL_SECRET/${{ secrets.PULL_SECRET }}/' install-config.yaml
-      - run: cat install-config.yaml
-      - run: mkdir ~/ocp-artifact; cp install-config.yaml ~/ocp-artifact/
+        run: |
+          perl -pi -e 's/PULL_SECRET/${{ secrets.PULL_SECRET }}/' install-config.yaml
+          cat install-config.yaml
+          mkdir ~/ocp-artifact; cp install-config.yaml ~/ocp-artifact/
         
       - name: Install OpenShift CLI tools
         uses: redhat-actions/openshift-tools-installer@v1
@@ -29,13 +30,24 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-east-1
           
-      - name: Setup GitHub IDP
-        run: export KUBECONFIG=~/ocp-artifact/auth/kubeconfig
-      - run: oc get nodes
-      - run: oc create secret generic github-client-secret --from-literal=clientSecret=${{ secrets.CLIENT_SECRET }} -n openshift-config
-      - run: oc apply -f idp-oauth.yaml
       - name: Save Artifacts for Destroy
         uses: actions/upload-artifact@v2
         with:
           name: ocp-artifact
           path: ~/ocp-artifiact
+          
+      - name: Setup GitHub IDP
+        run: |
+          export KUBECONFIG=~/ocp-artifact/auth/kubeconfig
+          oc get nodes
+          oc create secret generic github-client-secret --from-literal=clientSecret=${{ secrets.CLIENT_SECRET }} -n openshift-config
+          oc apply -f idp-oauth.yaml
+      
+      - name: Deploy ArgoCD
+        run: |
+          oc create namespace argocd
+          oc apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+          oc patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+#          curl -sSL -o ~/ https://github.com/argoproj/argo-cd/releases/download/v1.7.14/argocd-linux-amd64
+#          chmod +x argocd
+          
