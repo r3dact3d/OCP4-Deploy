@@ -1,0 +1,29 @@
+name: Destroy OCP 4.x IPI in AWS 
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'dumb.md'
+jobs:
+  Setup:
+    name: Setup OpenShift Installer Binary
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download OCP Cluster Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: ocp-artifact
+          path: ~/ocp-artifact
+        
+      - name: Install OpenShift CLI tools
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          openshift-install: "4.7.2"
+          
+      - name: Destroy OpenShift Cluster
+        run: openshift-install destroy cluster --dir=~/ocp-artifact
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
