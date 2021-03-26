@@ -17,6 +17,10 @@ The purpose of this repo is to:
 - To deploy OCP4.x
   - Ensure PULL_SECRET GitHub Secret is created and up-to-date
   - Ensure GitHub Secrets for AWS creds are created and valid
+  - IDP
+    - GitHub IDP is used in this deploy, so a GitHub organization should be created
+    - Add the clientSecret to GitHub Secrets
+    - Update the GitHub Organization name and clientID in idp-oauth.yaml
   - Create PR to merge deploy.md to main after adding name and date to list
 - To destroy OCP4.x
   - Validate artifact for the cluster is still available
