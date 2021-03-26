@@ -19,8 +19,8 @@ The purpose of this repo is to:
   - Ensure GitHub Secrets for AWS creds are created and valid
   - IDP
     - GitHub IDP is used in this deploy, so a GitHub organization should be created
-    - Add the clientSecret to GitHub Secrets
-    - Update the GitHub Organization name and clientID in idp-oauth.yaml
+    - Add the clientSecret to GitHub Secrets as CLIENT_SECRET
+    - Update the GitHub Organization name and clientID in idp-oauth.yaml file
   - Create PR to merge deploy.md to main after adding name and date to list
 - To destroy OCP4.x
   - Validate artifact for the cluster is still available
