@@ -20,6 +20,7 @@ jobs:
         uses: redhat-actions/openshift-tools-installer@v1
         with:
           openshift-install: "4.7.2"
+          oc: "4.7.2"
           
       - name: Create OpenShift Cluster
         run: openshift-install create cluster --dir=~/ocp-artifact
@@ -28,6 +29,11 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-east-1
           
+      - name: Setup GitHub IDP
+        run: export KUBECONFIG=~/ocp-artifact/auth/kubeconfig
+      - run: oc get nodes
+      - run: oc create secret generic github-client-secret --from-literal=clientSecret=${{ secrets.CLIENT_SECRET }} -n openshift-config
+      - run: oc apply -f idp-oauth.yaml
       - name: Save Artifacts for Destroy
         uses: actions/upload-artifact@v2
         with:
