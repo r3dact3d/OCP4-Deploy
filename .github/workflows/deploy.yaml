@@ -15,7 +15,8 @@ jobs:
         run: |
           perl -pi -e 's/PULL_SECRET/${{ secrets.PULL_SECRET }}/' install-config.yaml
           cat install-config.yaml
-          mkdir ~/ocp-artifact; cp install-config.yaml ~/ocp-artifact/
+          mkdir ~/ocp-artifact
+          cp install-config.yaml ~/ocp-artifact/
         
       - name: Install OpenShift CLI tools
         uses: redhat-actions/openshift-tools-installer@v1
