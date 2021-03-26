@@ -43,6 +43,7 @@ jobs:
           oc get nodes
           oc create secret generic github-client-secret --from-literal=clientSecret=${{ secrets.CLIENT_SECRET }} -n openshift-config
           oc apply -f idp-oauth.yaml
+          oc adm policy add-cluster-role-to-user cluster-admin ${{ secrets.CLUSTER_ADMIN }}
       
       - name: Deploy ArgoCD
         run: |
