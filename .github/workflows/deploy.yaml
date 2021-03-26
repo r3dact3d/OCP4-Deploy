@@ -39,7 +39,7 @@ jobs:
           
       - name: Setup GitHub IDP
         run: |
-          export KUBECONFIG=~/ocp-artifact/auth/kubeconfig
+          export KUBECONFIG=ocp-artifact/auth/kubeconfig
           oc get nodes
           oc create secret generic github-client-secret --from-literal=clientSecret=${{ secrets.CLIENT_SECRET }} -n openshift-config
           oc apply -f idp-oauth.yaml
