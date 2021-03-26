@@ -41,6 +41,7 @@ The purpose of this repo is to:
 
 ## TODO
 - Add OCP openshift-installer version as variable
+- How to tie the artifact from _Deploy_ workflow to _Destroy_ workflow?
 - Day 1 Ops
   - GitHub IDP 
   - User RBAC
