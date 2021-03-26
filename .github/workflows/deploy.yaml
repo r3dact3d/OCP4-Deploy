@@ -17,6 +17,7 @@ jobs:
           cat install-config.yaml
           mkdir ~/ocp-artifact
           cp install-config.yaml ~/ocp-artifact/
+          ls ~/ocp-artifact/
         
       - name: Install OpenShift CLI tools
         uses: redhat-actions/openshift-tools-installer@v1
