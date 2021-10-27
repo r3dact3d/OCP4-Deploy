@@ -37,24 +37,39 @@ Repo for deploying OCP to AWS
 .. AWS_SECRET_ACCESS_KEY is the AWS Secret Access key
 . Create PR to merge deploy.md to main after adding name and date to list
 
+INFO: You can now check the Actions to watch/check the status of the deployment
+
+=== Actions
+Upon successful merge to main of deploy.md file, the workflow will automatically kick off.
+
+. Perform AWS IPI 
+. Creates an Artifact for Destroy
+.. You can download artifcat if needed from GitHub Actions > Runs
+.. Double check your retention period for Artifacts
+. Setup HTPasswd IDP
+.. Uses CLUSTER_ADMIN and ADMIN_PASS
+.. Uses DEV_PASS for andrew the developer
+. Install GitOps Operator
+.. Sets admin password for console to ADMIN_PASS
 
 
 
-NOTE: GitHub IDP is disabled currently
 
-  ** IDP
-    *** GitHub IDP is used in this deploy, so a GitHub organization should be created
-    *** Add the clientSecret to GitHub Secrets as CLIENT_SECRET
-    *** Update the GitHub Organization name and clientID in idp-oauth.yaml file
-
-* To destroy OCP4.x
-  ** Validate artifact for the cluster is still available
-  ** Ensure GitHub Secrets for AWS creds are created and valid
-  ** Create PR to merge destroy.md to main after adding name and date to list
+=== To destroy OCP4.x
+. Validate artifact for the cluster is still available
+. Ensure GitHub Secrets for AWS creds are created and valid
+. Create PR to merge destroy.md to main after adding name and date to list
 
 == Important
 * During the *deploy* workflow the artifacts around the AWS resources that are deployed are needed for the *destroy* workflow.  
 * The artifacts are uploaded for only 90 days and will need to be *manually* downloaded if it's not planned to *destroy* the cluster within that retention period.
+
+NOTE: GitHub IDP is disabled currently
+
+=== GitHub IDP
+* GitHub IDP is used in this deploy, so a GitHub organization should be created
+* Add the clientSecret to GitHub Secrets as CLIENT_SECRET
+* Update the GitHub Organization name and clientID in idp-oauth.yaml file
 
 == TODO
 * Add OCP openshift-installer version as variable
