@@ -13,8 +13,7 @@ controlPlane:
   platform: {}
   replicas: 3
 metadata:
-  creationTimestamp: null
-  name: mm
+  name: blinker19
 networking:
   clusterNetwork:
   - cidr: 10.128.0.0/14
