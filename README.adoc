@@ -3,12 +3,12 @@ Repo for deploying OCP to AWS
 
 == Content
 
-[Purpose](#purpose)
-[Architecture](#architecture)
-[Workflow](#workflow)
-[Important](#important)
+<<Purpose, purpose>>
+<<Architecture, architecture>>
+<<Workflow, workflow>>
+<<Important, Important>>
 <<TODO, TODO>>
-[TODO](#todo)
+
 
 == Purpose
 The purpose of this repo is to:
