@@ -22,19 +22,23 @@ Repo for deploying OCP to AWS
   ** If you use outside of this project, you may also want to change the cluster name
 
 == Workflow
-* To deploy OCP4.x
-  ** Update variables in the install-config.yaml file
-    *** baseDomain is the top level route53 domain
-    *** metadata.Name is cluster name
-    *** region might need to be updated
-  ** Ensure GitHub Secrets are created and up-to-date
-    *** CLUSTER_ADMIN is the cluster admin username
-    *** ADMIN_PASS is cluster admin password
-    *** DEV_PASS is the password for andrew the developer
-    *** PULL_SECRET is the required Red Hat creds for their repositories
-    *** AWS_ACCESS_KEY_ID is the AWS Access Key
-    *** AWS_SECRET_ACCESS_KEY is the AWS Secret Access key
-  ** Create PR to merge deploy.md to main after adding name and date to list
+
+=== To deploy OCP4.x
+. Update variables in the install-config.yaml file
+.. baseDomain is the top level route53 domain
+.. metadata.Name is cluster name
+.. region might need to be updated
+. Ensure GitHub Secrets are created and up-to-date
+.. CLUSTER_ADMIN is the cluster admin username
+..  ADMIN_PASS is cluster admin password
+..  DEV_PASS is the password for andrew the developer
+.. PULL_SECRET is the required Red Hat creds for their repositories
+.. AWS_ACCESS_KEY_ID is the AWS Access Key
+.. AWS_SECRET_ACCESS_KEY is the AWS Secret Access key
+. Create PR to merge deploy.md to main after adding name and date to list
+
+
+
 
 NOTE: GitHub IDP is disabled currently
 
