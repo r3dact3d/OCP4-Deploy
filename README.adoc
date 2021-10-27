@@ -25,6 +25,7 @@ Repo for deploying OCP to AWS
 * To deploy OCP4.x
   ** Update variables in the install-config.yaml file
     *** baseDomain is the top level route53 domain
+    *** metadata.Name is cluster name
     *** region might need to be updated
   ** Ensure GitHub Secrets are created and up-to-date
     *** CLUSTER_ADMIN is the cluster admin username
