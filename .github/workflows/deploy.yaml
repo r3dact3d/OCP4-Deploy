@@ -36,21 +36,32 @@ jobs:
         with:
           name: ocp-artifact
           path: ocp-artifact
-          
-      - name: Setup GitHub IDP
+
+      - name: Setup HTPasswd IDP
         run: |
           export KUBECONFIG=ocp-artifact/auth/kubeconfig
           oc get nodes
-          oc create secret generic github-client-secret --from-literal=clientSecret=${{ secrets.CLIENT_SECRET }} -n openshift-config
-          oc apply -f idp-oauth.yaml
+          echo "Creating htpasswd file"
+          htpasswd -c -b -B htpasswd ${{ secrets.CLUSTER_ADMIN }} ${{ secrets.ADMIN_PASS }}
+          htpasswd -b -B htpasswd andrew ${{ secrets.DEV_PASS }}
+          oc create secret generic htpass-secret --from-file=htpasswd=htpasswd -n openshift-config --dry-run -o yaml | oc apply -f -
+          oc apply -f cluster-oauth.yaml
           oc adm policy add-cluster-role-to-user cluster-admin ${{ secrets.CLUSTER_ADMIN }}
+
+#      - name: Setup GitHub IDP
+#        run: |
+#          export KUBECONFIG=ocp-artifact/auth/kubeconfig
+#          oc get nodes
+#          oc create secret generic github-client-secret --from-literal=clientSecret=${{ secrets.CLIENT_SECRET }} -n openshift-config
+#          oc apply -f idp-oauth.yaml
+#          oc adm policy add-cluster-role-to-user cluster-admin ${{ secrets.CLUSTER_ADMIN }}
       
-      - name: Deploy ArgoCD
-        run: |
-          export KUBECONFIG=ocp-artifact/auth/kubeconfig
-          oc create namespace argocd
-          oc apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-          oc patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+#      - name: Deploy ArgoCD
+#        run: |
+#          export KUBECONFIG=ocp-artifact/auth/kubeconfig
+#          oc create namespace argocd
+#          oc apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+#          oc patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
 #          curl -sSL -o ~/ https://github.com/argoproj/argo-cd/releases/download/v1.7.14/argocd-linux-amd64
 #          chmod +x argocd
           
