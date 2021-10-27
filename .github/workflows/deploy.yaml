@@ -48,6 +48,8 @@ jobs:
           oc apply -f cluster-oauth.yaml
           oc adm policy add-cluster-role-to-user cluster-admin ${{ secrets.CLUSTER_ADMIN }}
           oc set data secret openshift-gitops-cluster -n openshift-gitops admin.password=${{ secrets.ADMIN_PASS }}
+          
+          
           echo "----------------------------"
           echo "Your cluster API URL is:"
           oc whoami --show-server
