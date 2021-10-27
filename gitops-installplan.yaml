@@ -1,0 +1,13 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: InstallPlan
+metadata:
+  labels:
+    operators.coreos.com/openshift-gitops-operator.openshift-operators: ""
+  name: install-2t82m
+  namespace: openshift-operators
+spec:
+  approval: Automatic
+  approved: true
+  clusterServiceVersionNames:
+  - openshift-gitops-operator.v1.3.0
+  generation: 1
