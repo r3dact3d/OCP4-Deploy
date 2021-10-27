@@ -47,6 +47,14 @@ jobs:
           oc create secret generic htpass-secret --from-file=htpasswd=htpasswd -n openshift-config --dry-run -o yaml | oc apply -f -
           oc apply -f cluster-oauth.yaml
           oc adm policy add-cluster-role-to-user cluster-admin ${{ secrets.CLUSTER_ADMIN }}
+#          oc delete secrets kubeadmin -n kube-system --ignore-not-found=true
+          echo "----------------------------"
+          echo "Your cluster API URL is:"
+          oc whoami --show-server
+          echo "----------------------------"
+          echo "Your cluster console URL is:"
+          oc whoami --show-console
+          echo "----------------------------"
 
 #      - name: Setup GitHub IDP
 #        run: |
@@ -55,7 +63,8 @@ jobs:
 #          oc create secret generic github-client-secret --from-literal=clientSecret=${{ secrets.CLIENT_SECRET }} -n openshift-config
 #          oc apply -f idp-oauth.yaml
 #          oc adm policy add-cluster-role-to-user cluster-admin ${{ secrets.CLUSTER_ADMIN }}
-      
+#          oc delete secrets kubeadmin -n kube-system --ignore-not-found=true
+
 #      - name: Deploy ArgoCD
 #        run: |
 #          export KUBECONFIG=ocp-artifact/auth/kubeconfig
