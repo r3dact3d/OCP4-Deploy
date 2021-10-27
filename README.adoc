@@ -3,11 +3,11 @@ Repo for deploying OCP to AWS
 
 == Content
 
-<<Purpose, purpose>>
-<<Architecture, architecture>>
-<<Workflow, workflow>>
-<<Important, Important>>
-<<TODO, TODO>>
+* <<Purpose, Purpose>>
+* <<Architecture, Architecture>>
+* <<Workflow, Workflow>>
+* <<Important, Important>>
+* <<TODO, TODO>>
 
 
 == Purpose
