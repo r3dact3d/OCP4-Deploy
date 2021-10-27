@@ -11,7 +11,6 @@ Repo for deploying OCP to AWS
 
 
 == Purpose
-The purpose of this repo is to:
 * Provide a CI/CD method to deploy an OCP4 cluster
 * Automated way to destroy cluster
 * Provide Day 1 GitOps to setup cluster in uniform "fresh" status
