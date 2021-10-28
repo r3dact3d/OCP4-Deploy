@@ -21,8 +21,8 @@ jobs:
       - name: Install OpenShift CLI tools
         uses: redhat-actions/openshift-tools-installer@v1
         with:
-          openshift-install: "4.7.2"
-          oc: "4.7.2"
+          openshift-install: "4.8.4"
+          oc: "4.8.4"
           
       - name: Create OpenShift Cluster
         run: openshift-install create cluster --dir=ocp-artifact/
