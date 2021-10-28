@@ -3,23 +3,9 @@ Repo for deploying OCP to AWS
 
 == Content
 
-* <<Purpose, Purpose>>
-* <<Architecture, Architecture>>
 * <<Workflow, Workflow>>
 * <<Important, Important>>
 * <<TODO, TODO>>
-
-
-== Purpose
-* Provide a CI/CD method to deploy an OCP4 cluster
-* Automated way to destroy cluster
-* Provide Day 1 GitOps to setup cluster in uniform "fresh" status
-
-== Architecture
-* Domain is registered in AWS with hosted zone
-* Review the install-config.yaml file
-  ** The default set in this repo is a 3 node cluster that combines Control Plane nodes with compute nodes, because $$$
-  ** If you use outside of this project, you may also want to change the cluster name
 
 == Workflow
 
@@ -52,24 +38,21 @@ Upon successful merge to main of deploy.md file, the workflow will automatically
 . Install GitOps Operator
 .. Sets admin password for console to ADMIN_PASS
 
-
-
-
-=== To destroy OCP4.x
-. Validate artifact for the cluster is still available
-. Ensure GitHub Secrets for AWS creds are created and valid
-. Create PR to merge destroy.md to main after adding name and date to list
-
-== Important
-* During the *deploy* workflow the artifacts around the AWS resources that are deployed are needed for the *destroy* workflow.  
+=== Important
+* During the *deploy* workflow the artifacts describing the AWS resources that are deployed are needed for the *destroy* workflow.  
 * The artifacts are uploaded for only 90 days and will need to be *manually* downloaded if it's not planned to *destroy* the cluster within that retention period.
 
-NOTE: GitHub IDP is disabled currently
+=== To destroy OCP4.x
+. Ensure following requirements are met
+.. OpenShift Installer binary is in PATH
+.. AWS CLI and credentials are added to `aws configure`
+. Download artifact from GitHub Actions and extract
+.. Destroy the cluster
+----
+./openshift-install destroy cluster --dir=artifact
+----
 
-=== GitHub IDP
-* GitHub IDP is used in this deploy, so a GitHub organization should be created
-* Add the clientSecret to GitHub Secrets as CLIENT_SECRET
-* Update the GitHub Organization name and clientID in idp-oauth.yaml file
+
 
 == TODO
 * Add OCP openshift-installer version as variable
@@ -78,3 +61,12 @@ NOTE: GitHub IDP is disabled currently
   ** GitHub IDP 
   ** User RBAC
   ** Remove kubeadmin
+
+
+
+NOTE: GitHub IDP is disabled currently
+
+=== GitHub IDP
+* GitHub IDP is used in this deploy, so a GitHub organization should be created
+* Add the clientSecret to GitHub Secrets as CLIENT_SECRET
+* Update the GitHub Organization name and clientID in idp-oauth.yaml file
