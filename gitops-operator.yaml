@@ -10,9 +10,7 @@ kind: OperatorGroup
 metadata:
   name: global-operators
   namespace: openshift-operators
-spec:
-  targetNamespaces:
-  - openshift-operators
+spec: {}
   
 ---
 apiVersion: operators.coreos.com/v1alpha1
