@@ -1,6 +1,6 @@
-= OCP_Deploy
+= Repo for deploying OCP to AWS
 
-Repo for deploying OCP to AWS
+NOTE: *fork* or *clone* repo so that you can use Your own GitHub Secrets and worklflow.
 
 == Content
 
@@ -11,6 +11,7 @@ Repo for deploying OCP to AWS
 == Workflow
 
 === To deploy OCP4.x
+
 . Update variables in the install-config.yaml file
 .. baseDomain is the top level route53 domain
 .. metadata.Name is cluster name
@@ -27,6 +28,7 @@ Repo for deploying OCP to AWS
 INFO: You can now check the Actions to watch/check the status of the deployment
 
 === Actions
+
 Upon successful merge to main of deploy.md file, the workflow will automatically kick off.
 
 . Perform AWS IPI 
@@ -40,15 +42,18 @@ Upon successful merge to main of deploy.md file, the workflow will automatically
 .. Sets admin password for console to ADMIN_PASS
 
 === Important
+
 * During the *deploy* workflow the artifacts describing the AWS resources that are deployed are needed for the *destroy* workflow.  
 * The artifacts are uploaded for only 90 days and will need to be *manually* downloaded if it's not planned to *destroy* the cluster within that retention period.
 
 === To destroy OCP4.x
+
 . Ensure following requirements are met
 .. OpenShift Installer binary is in PATH
 .. AWS CLI and credentials are added to `aws configure`
 . Download artifact from GitHub Actions and extract
 .. Destroy the cluster
+
 ----
 ./openshift-install destroy cluster --dir=artifact
 ----
@@ -56,6 +61,7 @@ Upon successful merge to main of deploy.md file, the workflow will automatically
 
 
 == TODO
+
 * Add OCP openshift-installer version as variable
 * How to tie the artifact from _Deploy_ workflow to _Destroy_ workflow?
 * Day 1 Ops
@@ -68,6 +74,7 @@ Upon successful merge to main of deploy.md file, the workflow will automatically
 NOTE: GitHub IDP is disabled currently
 
 === GitHub IDP
+
 * GitHub IDP is used in this deploy, so a GitHub organization should be created
 * Add the clientSecret to GitHub Secrets as CLIENT_SECRET
 * Update the GitHub Organization name and clientID in idp-oauth.yaml file
