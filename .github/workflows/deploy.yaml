@@ -21,8 +21,8 @@ jobs:
       - name: Install OpenShift CLI tools
         uses: redhat-actions/openshift-tools-installer@v1
         with:
-          openshift-install: "4.8.10"
-          oc: "4.8.10"
+          openshift-install: "4.9.4"
+          oc: "4.9.4"
           
       - name: Create OpenShift Cluster
         run: openshift-install create cluster --dir=ocp-artifact/
@@ -46,6 +46,7 @@ jobs:
           htpasswd -b -B htpasswd andrew ${{ secrets.DEV_PASS }}
           oc create secret generic htpass-secret --from-file=htpasswd=htpasswd -n openshift-config --dry-run -o yaml | oc apply -f -
           oc apply -f cluster-oauth.yaml
+          sleep 300
           oc adm policy add-cluster-role-to-user cluster-admin ${{ secrets.CLUSTER_ADMIN }}
           
           
