@@ -33,7 +33,7 @@ Upon successful merge to main of deploy.md file, the workflow will automatically
 
 . Perform AWS IPI 
 . Creates an Artifact for Destroy
-.. You can download artifcat if needed from GitHub Actions > Runs
+.. You can download artifact if needed from GitHub Actions > Runs
 .. Double check your retention period for Artifacts
 . Setup HTPasswd IDP
 .. Uses CLUSTER_ADMIN and ADMIN_PASS
