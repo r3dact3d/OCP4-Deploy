@@ -25,7 +25,7 @@ NOTE: *fork* or *clone* repo so that you can use Your own GitHub Secrets and wor
 .. AWS_SECRET_ACCESS_KEY is the AWS Secret Access key
 . Create PR to merge deploy.md to main after adding name and date to list
 
-INFO: You can now check the Actions to watch/check the status of the deployment
+NOTE: You can now check the Actions to watch/check the status of the deployment.  Also, the latest stable version of OpenShift 4 will be deployed.  This can be updated or changed in the workflow deploy file.
 
 === Actions
 
