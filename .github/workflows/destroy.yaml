@@ -1,5 +1,4 @@
-name: Destroy OCP 4.x IPI in AWS 
-on:
+name: Destroy
   push:
     branches:
       - 'main'
@@ -21,10 +20,6 @@ jobs:
           name: ocp-artifact
           path: .
           check_artifacts:  false
-          
-      - name: Validate artifact
-        run: |
-          ls -al 
         
       - name: Install OpenShift CLI tools
         uses: redhat-actions/openshift-tools-installer@v1
