@@ -24,16 +24,16 @@ jobs:
           
       - name: Validate artifact
         run: |
-          ls -al ./ocp*
+          ls -al 
         
-#      - name: Install OpenShift CLI tools
-#        uses: redhat-actions/openshift-tools-installer@v1
-#        with:
-#          openshift-install: "4"
+      - name: Install OpenShift CLI tools
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          openshift-install: "4"
           
-#      - name: Destroy OpenShift Cluster
-#        run: openshift-install destroy cluster --dir=./ocp-artifact
-#        env:
-#          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#          AWS_DEFAULT_REGION: us-east-2
+      - name: Destroy OpenShift Cluster
+        run: openshift-install destroy cluster --dir=.
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-2
