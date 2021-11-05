@@ -12,15 +12,20 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Download OCP Cluster Artifacts
-        uses: actions/download-artifact@v2
+        uses: dawidd6/action-download-artifact@v2.15.0
         with:
-          name: ocp-artifact
-          path: ocp-artifact
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          workflow: workflow_name.yml
+          workflow_conclusion: success  
+          branch: master
+          name: artifact_name
+          path: extract_here
+          check_artifacts:  false
         
       - name: Install OpenShift CLI tools
         uses: redhat-actions/openshift-tools-installer@v1
         with:
-          openshift-install: "4.7.2"
+          openshift-install: "4"
           
       - name: Destroy OpenShift Cluster
         run: openshift-install destroy cluster --dir=ocp-artifact
