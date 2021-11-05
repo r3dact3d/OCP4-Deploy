@@ -15,11 +15,11 @@ jobs:
         uses: dawidd6/action-download-artifact@v2.15.0
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
-          workflow: workflow_name.yml
+          workflow: deploy.yaml
           workflow_conclusion: success  
-          branch: master
-          name: artifact_name
-          path: extract_here
+          branch: main
+          name: ocp-artifact
+          path: .
           check_artifacts:  false
         
       - name: Install OpenShift CLI tools
@@ -28,7 +28,7 @@ jobs:
           openshift-install: "4"
           
       - name: Destroy OpenShift Cluster
-        run: openshift-install destroy cluster --dir=ocp-artifact
+        run: openshift-install destroy cluster --dir=./ocp-artifact
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
