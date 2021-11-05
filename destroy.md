@@ -5,3 +5,4 @@ BE CAREFUL! EDIT WITH EXTREME PREJUDICE!
 ** retest destroy adding checkout/v2 to steps
 
 * Testing download artifact
+* Testing complete destroy workflow
