@@ -1,4 +1,5 @@
 name: Destroy
+on:
   push:
     branches:
       - 'main'
