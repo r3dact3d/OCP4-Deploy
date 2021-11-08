@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@main
       - name: Setup Working Directory for OCP Install 
         run: |
-          perl -pi -e 's/PULL_SECRET/${{ secrets.PULL_SECRET }}/' install-config.yaml
+          perl -pi -e 's/PULL_SECRET/${{ secrets.RED_HAT_PULLSECRET }}/' install-config.yaml
           mkdir ocp-artifact
           cp install-config.yaml ocp-artifact/
           cat ocp-artifact/install-config.yaml
@@ -42,12 +42,12 @@ jobs:
           export KUBECONFIG=ocp-artifact/auth/kubeconfig
           oc apply -f gitops-operator.yaml -n openshift-operators
           echo "Creating htpasswd file"
-          htpasswd -c -b -B htpasswd ${{ secrets.CLUSTER_ADMIN }} ${{ secrets.ADMIN_PASS }}
-          htpasswd -b -B htpasswd andrew ${{ secrets.DEV_PASS }}
+          htpasswd -c -b -B htpasswd ${{ secrets.OCP_ADMIN_USER }} ${{ secrets.OCP_ADMIN_PASS }}
+          htpasswd -b -B htpasswd ${{ secrets.OCP_DEV_USER }} ${{ secrets.OCP_DEV_PASS }}
           oc create secret generic htpass-secret --from-file=htpasswd=htpasswd -n openshift-config --dry-run -o yaml | oc apply -f -
           oc apply -f cluster-oauth.yaml
           sleep 300
-          oc adm policy add-cluster-role-to-user cluster-admin ${{ secrets.CLUSTER_ADMIN }}
+          oc adm policy add-cluster-role-to-user cluster-admin ${{ secrets.OCP_ADMIN_USER }}
           
           
           echo "----------------------------"
