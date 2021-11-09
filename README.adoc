@@ -32,7 +32,7 @@ NOTE: *fork* or *clone* repo so that you can use Your own GitHub Secrets and wor
 
 NOTE: You can now check the Actions to watch/check the status of the deployment.  Also, the latest stable version of OpenShift 4 will be deployed.  This can be updated or changed in the workflow deploy file.
 
-=== Actions
+==== Actions
 
 Upon successful merge to main of deploy.md file, the workflow will automatically kick off.
 
@@ -46,18 +46,16 @@ Upon successful merge to main of deploy.md file, the workflow will automatically
 . Install GitOps Operator
 .. Sets admin password for console to ADMIN_PASS
 
-=== Important
+==== Important
 
 * During the *deploy* workflow the artifacts describing the AWS resources that are deployed are needed for the *destroy* workflow.  
 * The artifacts are uploaded for only 90 days and will need to be *manually* downloaded if it's not planned to *destroy* the cluster within that retention period.
 
 === To destroy OCP4.x
 
-. Ensure following requirements are met
-.. OpenShift Installer binary is in PATH
-.. AWS CLI and credentials are added to `aws configure`
-. Download artifact from GitHub Actions and extract
-.. Destroy the cluster
+. Push or Merge change to destroy.md
+
+This will kick off the destroy workflow, pulling the artifact from deploy workflow automatically and destroying the AWS resources.
 
 ----
 ./openshift-install destroy cluster --dir=artifact
