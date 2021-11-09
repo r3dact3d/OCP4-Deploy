@@ -57,9 +57,7 @@ Upon successful merge to main of deploy.md file, the workflow will automatically
 
 This will kick off the destroy workflow, pulling the artifact from deploy workflow automatically and destroying the AWS resources.
 
-----
-./openshift-install destroy cluster --dir=artifact
-----
+
 
 
 
