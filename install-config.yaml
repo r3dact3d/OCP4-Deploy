@@ -1,11 +1,11 @@
 apiVersion: v1
-baseDomain: ${{ secrets.OCP_BASE_DOMAIN }}
+baseDomain: OCP_BASE_DOMAIN
 compute:
 - architecture: amd64
   hyperthreading: Enabled
   name: worker
   platform: {}
-  replicas: 3 
+  replicas: 3
 controlPlane:
   architecture: amd64
   hyperthreading: Enabled
@@ -13,7 +13,7 @@ controlPlane:
   platform: {}
   replicas: 3
 metadata:
-  name: ${{ secrets.OCP_CLUSTER_NAME }}
+  name: OCP_CLUSTER_NAME
 networking:
   clusterNetwork:
   - cidr: 10.128.0.0/14
@@ -25,6 +25,6 @@ networking:
   - 172.30.0.0/16
 platform:
   aws:
-    region: ${{ secrets.AWS_REGION }}
+    region: AWS_REGION
 publish: External
-pullSecret: ${{ secrets.RED_HAT_PULLSECRET }}
+pullSecret: 'RED_HAT_PULLSECRET'
