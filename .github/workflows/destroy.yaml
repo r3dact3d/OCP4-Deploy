@@ -16,17 +16,17 @@ jobs:
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
           workflow: deploy.yaml
-          workflow_conclusion: success  
+          workflow_conclusion: success
           branch: main
           name: ocp-artifact
           path: .
           check_artifacts:  false
-        
+
       - name: Install OpenShift CLI tools
         uses: redhat-actions/openshift-tools-installer@v1
         with:
-          openshift-install: "4"
-          
+          openshift-install: "${{secrets.OCP_CLIENT_VERSION}}"
+
       - name: Destroy OpenShift Cluster
         run: openshift-install destroy cluster --dir=.
         env:

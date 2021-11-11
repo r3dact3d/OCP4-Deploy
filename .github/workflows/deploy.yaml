@@ -11,26 +11,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@main
-      - name: Setup Working Directory for OCP Install 
+      - name: Setup Working Directory for OCP Install
         run: |
-          perl -pi -e 's/PULL_SECRET/${{ secrets.PULL_SECRET }}/' install-config.yaml
+          perl -pi -e 's/RED_HAT_PULLSECRET/${{ secrets.RED_HAT_PULLSECRET }}/' install-config.yaml
+          perl -pi -e 's/OCP_BASE_DOMAIN/${{ secrets.OCP_BASE_DOMAIN }}/' install-config.yaml
+          perl -pi -e 's/OCP_CLUSTER_NAME/${{ secrets.OCP_CLUSTER_NAME }}/' install-config.yaml
+          perl -pi -e 's/AWS_REGION/${{ secrets.AWS_REGION }}/' install-config.yaml
           mkdir ocp-artifact
           cp install-config.yaml ocp-artifact/
           cat ocp-artifact/install-config.yaml
-        
+
       - name: Install OpenShift CLI tools
         uses: redhat-actions/openshift-tools-installer@v1
         with:
-          openshift-install: "4.7"
-          oc: "4.7"
-          
+          openshift-install: "${{secrets.OCP_CLIENT_VERSION}}"
+          oc: "${{secrets.OCP_CLIENT_VERSION}}"
+
       - name: Create OpenShift Cluster
         run: openshift-install create cluster --dir=ocp-artifact/
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-east-2
-          
+
       - name: Save Artifacts for Destroy
         uses: actions/upload-artifact@v2
         with:
@@ -42,14 +45,14 @@ jobs:
           export KUBECONFIG=ocp-artifact/auth/kubeconfig
           oc apply -f gitops-operator.yaml -n openshift-operators
           echo "Creating htpasswd file"
-          htpasswd -c -b -B htpasswd ${{ secrets.CLUSTER_ADMIN }} ${{ secrets.ADMIN_PASS }}
-          htpasswd -b -B htpasswd andrew ${{ secrets.DEV_PASS }}
+          htpasswd -c -b -B htpasswd ${{ secrets.OCP_ADMIN_USER }} ${{ secrets.OCP_ADMIN_PASS }}
+          htpasswd -b -B htpasswd ${{ secrets.OCP_DEV_USER }} ${{ secrets.OCP_DEV_PASS }}
           oc create secret generic htpass-secret --from-file=htpasswd=htpasswd -n openshift-config --dry-run -o yaml | oc apply -f -
           oc apply -f cluster-oauth.yaml
           sleep 300
-          oc adm policy add-cluster-role-to-user cluster-admin ${{ secrets.CLUSTER_ADMIN }}
-          
-          
+          oc adm policy add-cluster-role-to-user cluster-admin ${{ secrets.OCP_ADMIN_USER }}
+
+
           echo "----------------------------"
           echo "Your cluster API URL is:"
           oc whoami --show-server
@@ -76,4 +79,4 @@ jobs:
 #          oc patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
 #          curl -sSL -o ~/ https://github.com/argoproj/argo-cd/releases/download/v1.7.14/argocd-linux-amd64
 #          chmod +x argocd
-          
+
