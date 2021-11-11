@@ -6,3 +6,4 @@ BE CAREFUL! EDIT WITH EXTREME PREJUDICE!
 
 * Testing download artifact
 * Testing complete destroy workflow
+* Destroying 4.9.x build 
