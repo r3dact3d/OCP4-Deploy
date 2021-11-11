@@ -9,3 +9,4 @@ Updates testing 4.7.4
 * 4.8.10
 * 4.9.4 x2
 * 4.9.x
+* 4.x latest on this date
