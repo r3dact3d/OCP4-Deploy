@@ -8,3 +8,4 @@ BE CAREFUL! EDIT WITH EXTREME PREJUDICE!
 * Testing complete destroy workflow
 * Testing completed
 * Destroying 4.9.x build 
+* Destroying 4.7.x build with Luis merge
