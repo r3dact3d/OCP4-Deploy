@@ -14,3 +14,4 @@ Updates testing 4.7.4
 * 4.9.x
 * 4.x latest on this date
 * 4.7 latest to test portworx operator
+* 4.7 on openTLC
