@@ -8,6 +8,8 @@ on:
     branches:
       - main
       - master
+  workflow_dispatch:
+
 jobs:
   Setup:
     name: Run Ansible Playbook against new OCP4 cluster
@@ -20,8 +22,10 @@ jobs:
           path: ansible-tasks
 
       - name: Download Artifacts from Cluster Deploy
-        uses: actions/download-artifact@v2
+        uses: dawidd6/action-download-artifact@v2
         with:
+          workflow: Deploy.yaml
+          workflow_conclusion: success
           name: ocp-artifact
           path: ocp-artifact
 
