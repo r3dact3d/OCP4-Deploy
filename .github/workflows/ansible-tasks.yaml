@@ -25,7 +25,6 @@ jobs:
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: Deploy.yaml
-          workflow_conclusion: success
           name: ocp-artifact
           path: ocp-artifact
 
