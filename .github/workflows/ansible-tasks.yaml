@@ -1,0 +1,38 @@
+name: Ansible-Tasks
+on:
+  workflow_run:
+    workflows:
+      - Deploy
+    types:
+      - completed
+    branches:
+      - main
+      - master
+jobs:
+  Setup:
+    name: Run Ansible Playbook against new OCP4 cluster
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout ocp4-ansible-roles external repo
+        uses: actions/checkout@v2
+        with:
+          repository: luiscachog/ocp4-ansible-roles
+          path: ansible-tasks
+
+      - name: Download Artifacts from Cluster Deploy
+        uses: actions/download-artifact@v2
+        with:
+          name: ocp-artifact
+          path: ocp-artifact
+
+      - name: Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
+
+      - name: Run ansible playbook
+        run: |
+          export KUBECONFIG=ocp-artifact/auth/kubeconfig
+          ansible-playbook ansible-tasks/main.yaml
