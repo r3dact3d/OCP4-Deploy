@@ -5,6 +5,8 @@ on:
       - 'main'
     paths:
       - 'destroy.md'
+  workflow_dispatch:
+
 jobs:
   Setup:
     name: Setup OpenShift Installer Binary
