@@ -34,8 +34,18 @@ jobs:
           if [ -f requirements.txt ]; then
             pip install -r requirements.txt
           fi
+          if [ -f ansible-tasks/requirements.txt ]; then
+            pip install -r ansible-tasks/requirements.txt
+          fi
+
+      - name: Install OpenShift CLI tools
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          openshift-install: "${{secrets.OCP_CLIENT_VERSION}}"
+          oc: "${{secrets.OCP_CLIENT_VERSION}}"
 
       - name: Run ansible playbook
         run: |
-          export KUBECONFIG=ocp-artifact/auth/kubeconfig
+          cp ocp-artifact/auth/kubeconfig $GITHUB_WORKSPACE/kubeconfig
+          export KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig
           ansible-playbook ansible-tasks/main.yaml
