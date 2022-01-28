@@ -1,8 +1,3 @@
-image::https://github.com/r3dact3d/OCP4-Deploy/actions/workflows/deploy.yaml/badge.svg[link="https://github.com/r3dact3d/OCP4-Deploy/actions/workflows/deploy.yaml"]
-
-image::https://github.com/r3dact3d/OCP4-Deploy/actions/workflows/destroy.yaml/badge.svg[link="https://github.com/r3dact3d/OCP4-Deploy/actions/workflows/destroy.yaml"]
-
-
 = Repo for deploying OCP to AWS
 
 NOTE: *fork* or *clone* repo so that you can use Your own GitHub Secrets and worklflow.
@@ -29,12 +24,15 @@ NOTE: *fork* or *clone* repo so that you can use Your own GitHub Secrets and wor
 .. AWS_ACCESS_KEY_ID is the AWS Access Key
 .. AWS_SECRET_ACCESS_KEY is the AWS Secret Access key
 .. AWS_REGION
+. Click Deploy button below and run workflow
+
+image::https://github.com/r3dact3d/OCP4-Deploy/actions/workflows/deploy.yaml/badge.svg[link="https://github.com/r3dact3d/OCP4-Deploy/actions/workflows/deploy.yaml"]
 
 NOTE: You can now check the Actions to watch/check the status of the deployment.  Also, the latest stable version of OpenShift 4 will be deployed.  This can be updated or changed in the workflow deploy file.
 
 ==== Actions
 
-Upon successful merge to main of deploy.md file, the workflow will automatically kick off.
+Running Deploy workflow will automatically kick off.
 
 . Perform AWS IPI 
 . Creates an Artifact for Destroy
@@ -53,13 +51,11 @@ Upon successful merge to main of deploy.md file, the workflow will automatically
 
 === To destroy OCP4.x
 
-. Push or Merge change to destroy.md
+. Click below Destroy button to use last saved artifact to destroy Openshift cluster and infra resources.
+
+image::https://github.com/r3dact3d/OCP4-Deploy/actions/workflows/destroy.yaml/badge.svg[link="https://github.com/r3dact3d/OCP4-Deploy/actions/workflows/destroy.yaml"]
 
 This will kick off the destroy workflow, pulling the artifact from deploy workflow automatically and destroying the AWS resources.
-
-
-
-
 
 == TODO
 
