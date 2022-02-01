@@ -37,5 +37,5 @@ jobs:
         run: |
           cp ocp-artifact/auth/kubeconfig $GITHUB_WORKSPACE/kubeconfig
           export KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig
-          oc create -f https://raw.githubusercontent.com/r3dact3d/gitops/ocp4/infra.yaml
+          oc create -f https://raw.githubusercontent.com/r3dact3d/gitops/main/infra.yaml -n openshift-gitops
        
