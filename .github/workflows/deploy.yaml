@@ -53,6 +53,11 @@ jobs:
           oc apply -f cluster-oauth.yaml
           sleep 300
           oc adm policy add-cluster-role-to-user cluster-admin ${{ secrets.OCP_ADMIN_USER }}
+          
+      - name: Setup Red Hat Advanced Cluster Manager in GitOps
+        run: |
+          export KUBECONFIG=ocp-artifact/auth/kubeconfig
+          oc create -f https://raw.githubusercontent.com/r3dact3d/gitops/ocp4/acm_build1/cluster.yaml
 
 
           echo "----------------------------"
