@@ -26,6 +26,7 @@ jobs:
           openshift-install: "${{secrets.OCP_CLIENT_VERSION}}"
           oc: "${{secrets.OCP_CLIENT_VERSION}}"
           
+      - uses: actions/checkout@main
       - name: GitOps Helper
         run: |
           cp ocp-artifact/auth/kubeconfig $GITHUB_WORKSPACE/kubeconfig
