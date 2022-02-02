@@ -37,7 +37,7 @@ jobs:
           cp ocp-artifact/auth/kubeconfig $GITHUB_WORKSPACE/kubeconfig
           export KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig
           export infraID=`oc get -o jsonpath='{.status.infrastructureName}{"\n"}' infrastructure cluster`
-          echo "infraID: $infraID> > gitops-tasks/blinker19/values.yaml
+          echo "infraID: $infraID" > gitops-tasks/blinker19/values.yaml
           echo "region: ${{ secrets.AWS_REGION }}" >> gitops-tasks/blinker19/values.yaml
           cat gitops-tasks/blinker19/values.yaml
           oc create -f gitops-tasks/blinker19/cluster.yaml -n openshift-gitops
