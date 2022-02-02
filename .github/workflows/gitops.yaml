@@ -29,16 +29,19 @@ jobs:
         run: |
           cp ocp-artifact/auth/kubeconfig $GITHUB_WORKSPACE/kubeconfig
           export KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig
-          export infraID=`oc get -o jsonpath='{.status.infrastructureName}{"\n"}' infrastructure cluster`
+          export infraID=`cat ocp-artifact/metadata.json | jq -r .infraID`
+          echo $infraID
       
           
       - uses: actions/checkout@main
       - name: Update infra machinesets
         run: |
-          perl -pi -e 's/{{ infraID }}/"${infraID}"/g' infra-machineset.yaml
+          echo 
+          perl -pi -e 's/{{ infraID }}/$infraID/g' infra-machineset.yaml
           perl -pi -e 's/{{ regionID }}/${{ secrets.AWS_REGION }}/g' infra-machineset.yaml
           cat infra-machineset.yaml
-          oc create -f infra-machineset.yaml
+          
+          
        
 #      - name: Checkout GitOps external repo
 #        uses: actions/checkout@v2
