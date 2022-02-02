@@ -14,13 +14,6 @@ jobs:
     name: GitOps Day2 Tasks
     runs-on: ubuntu-latest
     steps:
-    
-      - name: Install OpenShift CLI tools
-        uses: redhat-actions/openshift-tools-installer@v1
-        with:
-          openshift-install: "${{secrets.OCP_CLIENT_VERSION}}"
-          oc: "${{secrets.OCP_CLIENT_VERSION}}"
-          
       - name: Download Artifacts from Cluster Deploy
         uses: dawidd6/action-download-artifact@v2
         with:
@@ -31,20 +24,12 @@ jobs:
       - uses: actions/checkout@main
       - name: Get Infra ID
         run: |
-          cp ocp-artifact/auth/kubeconfig $GITHUB_WORKSPACE/kubeconfig
-          export infraID=`cat ocp-artifact/metadata.json | jq -r .infraID`
-          export KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig
+          export infraID=blinker19-08976d
           echo $infraID
           perl -pi -e 's/{{ infraID }}/$infraID/g' infra-machineset.yaml
           perl -pi -e 's/{{ regionID }}/${{ secrets.AWS_REGION }}/g' infra-machineset.yaml
           cat infra-machineset.yaml
-          
-      - name: Install OpenShift CLI tools
-        uses: redhat-actions/openshift-tools-installer@v1
-        with:
-          openshift-install: "${{secrets.OCP_CLIENT_VERSION}}"
-          oc: "${{secrets.OCP_CLIENT_VERSION}}"          
-          
+
        
 #      - name: Checkout GitOps external repo
 #        uses: actions/checkout@v2
