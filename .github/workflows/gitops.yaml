@@ -28,8 +28,9 @@ jobs:
       - name: Get Infra ID
         run: |
           cp ocp-artifact/auth/kubeconfig $GITHUB_WORKSPACE/kubeconfig
+          cat ocp-artifact/metadata.json | jq -r .infraID > $GITHUB_WORKSPACE/infraID
           export KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig
-          export infraID=`cat ocp-artifact/metadata.json | jq -r .infraID`
+          export infraID=$GITHUB_WORKSPACE/infraID
           echo $infraID
       
           
