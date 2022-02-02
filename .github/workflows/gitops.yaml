@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@main
       - name: Get Infra ID
         run: |
-          export infraID=blinker19-08976d
+          export infraID=`cat ocp-artifact/metadata.json | jq -r .infraID`
           echo $infraID
           perl -pi -e "s/{{ infraID }}/$infraID/g" infra-machineset.yaml
           perl -pi -e 's/{{ regionID }}/${{ secrets.AWS_REGION }}/g' infra-machineset.yaml
