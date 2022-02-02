@@ -37,6 +37,7 @@ jobs:
       - uses: actions/checkout@main
       - name: Update infra machinesets
         run: |
+          export infraID=`cat $GITHUB_WORKSPACE/infraID`
           echo $infraID
           perl -pi -e 's/{{ infraID }}/$infraID/g' infra-machineset.yaml
           perl -pi -e 's/{{ regionID }}/${{ secrets.AWS_REGION }}/g' infra-machineset.yaml
