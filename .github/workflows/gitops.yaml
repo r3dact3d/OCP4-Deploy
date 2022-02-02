@@ -32,10 +32,14 @@ jobs:
         with:
           repository: r3dact3d/gitops
           path: gitops-tasks
-          ref: ocp4
       - name: GitOps Helper
         run: |
           cp ocp-artifact/auth/kubeconfig $GITHUB_WORKSPACE/kubeconfig
           export KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig
+          export infraID=`oc get -o jsonpath='{.status.infrastructureName}{"\n"}' infrastructure cluster`
+          perl -pi -e 's/AWS_REGION/${{ secrets.AWS_REGION }}/' gitops-tasks/blinker19/cluster.yaml
+          perl -pi -e 's/INFRA_ID/\$infraID/' gitops-tasks/blinker19/cluster.yaml
+          cat gitops-tasks/blinker19/cluster.yaml
+
           oc create -f https://raw.githubusercontent.com/r3dact3d/gitops/main/infra.yaml -n openshift-gitops
        
