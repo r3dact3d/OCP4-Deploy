@@ -26,7 +26,7 @@ jobs:
         run: |
           export infraID=blinker19-08976d
           echo $infraID
-          perl -pi -e 's/{{ infraID }}/${infraID}/g' infra-machineset.yaml
+          perl -pi -e "s/{{ infraID }}/$infraID/g" infra-machineset.yaml
           perl -pi -e 's/{{ regionID }}/${{ secrets.AWS_REGION }}/g' infra-machineset.yaml
           cat infra-machineset.yaml
 
