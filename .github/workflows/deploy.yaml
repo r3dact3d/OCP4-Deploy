@@ -29,30 +29,30 @@ jobs:
           openshift-install: "${{secrets.OCP_CLIENT_VERSION}}"
           oc: "${{secrets.OCP_CLIENT_VERSION}}"
 
-#      - name: Create OpenShift Cluster
-#        run: openshift-install create cluster --dir=ocp-artifact/
-#        env:
-#          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#          AWS_DEFAULT_REGION: us-east-2
+      - name: Create OpenShift Cluster
+        run: openshift-install create cluster --dir=ocp-artifact/
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-2
 
-#      - name: Save Artifacts for Destroy
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: ocp-artifact
-#          path: ocp-artifact
+      - name: Save Artifacts for Destroy
+        uses: actions/upload-artifact@v2
+        with:
+          name: ocp-artifact
+          path: ocp-artifact
 
-#      - name: Setup HTPasswd IDP
-#        run: |
-#          export KUBECONFIG=ocp-artifact/auth/kubeconfig
-#          oc apply -f gitops-operator.yaml -n openshift-operators
-#          echo "Creating htpasswd file"
-#          htpasswd -c -b -B htpasswd ${{ secrets.OCP_ADMIN_USER }} ${{ secrets.OCP_ADMIN_PASS }}
-#          htpasswd -b -B htpasswd ${{ secrets.OCP_DEV_USER }} ${{ secrets.OCP_DEV_PASS }}
-#          oc create secret generic htpass-secret --from-file=htpasswd=htpasswd -n openshift-config --dry-run -o yaml | oc apply -f -
-#          oc apply -f cluster-oauth.yaml
-#          sleep 300
-#          oc adm policy add-cluster-role-to-user cluster-admin ${{ secrets.OCP_ADMIN_USER }}
+      - name: Setup HTPasswd IDP
+        run: |
+          export KUBECONFIG=ocp-artifact/auth/kubeconfig
+          oc apply -f gitops-operator.yaml -n openshift-operators
+          echo "Creating htpasswd file"
+          htpasswd -c -b -B htpasswd ${{ secrets.OCP_ADMIN_USER }} ${{ secrets.OCP_ADMIN_PASS }}
+          htpasswd -b -B htpasswd ${{ secrets.OCP_DEV_USER }} ${{ secrets.OCP_DEV_PASS }}
+          oc create secret generic htpass-secret --from-file=htpasswd=htpasswd -n openshift-config --dry-run -o yaml | oc apply -f -
+          oc apply -f cluster-oauth.yaml
+          sleep 300
+          oc adm policy add-cluster-role-to-user cluster-admin ${{ secrets.OCP_ADMIN_USER }}
           
       - name: Get Infra ID
         run: |
@@ -62,6 +62,7 @@ jobs:
           perl -pi -e 's/{{ infraID }}/$infraID/g' infra-machineset.yaml
           perl -pi -e 's/{{ regionID }}/${{ secrets.AWS_REGION }}/g' infra-machineset.yaml
           cat infra-machineset.yaml
+          oc create -f infra-machineset.yaml -n openshift-machine-api
           
     
 
