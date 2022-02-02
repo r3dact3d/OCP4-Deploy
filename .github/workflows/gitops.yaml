@@ -37,6 +37,7 @@ jobs:
           cp ocp-artifact/auth/kubeconfig $GITHUB_WORKSPACE/kubeconfig
           export KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig
           export infraID=`oc get -o jsonpath='{.status.infrastructureName}{"\n"}' infrastructure cluster`
+          echo $infraID
           perl -pi -e 's/AWS_REGION/${{ secrets.AWS_REGION }}/' gitops-tasks/blinker19/cluster.yaml
           perl -pi -e 's/INFRA_ID/${infraID}/' gitops-tasks/blinker19/cluster.yaml
           cat gitops-tasks/blinker19/cluster.yaml
