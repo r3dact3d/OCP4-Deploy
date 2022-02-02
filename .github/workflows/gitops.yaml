@@ -35,8 +35,8 @@ jobs:
       - uses: actions/checkout@main
       - name: Update infra machinesets
         run: |
-          perl -pi -e 's/{{ infraID }}/${infraID}/g' infra-machineset.yaml
-          perl -pi -e 's/{{ regionID}}/${{ secrets.AWS_REGION }}/g' infra-machineset.yaml
+          perl -pi -e 's/{{ infraID }}/"${infraID}"/g' infra-machineset.yaml
+          perl -pi -e 's/{{ regionID }}/${{ secrets.AWS_REGION }}/g' infra-machineset.yaml
           cat infra-machineset.yaml
           oc create -f infra-machineset.yaml
        
