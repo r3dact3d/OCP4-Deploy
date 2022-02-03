@@ -20,20 +20,22 @@ jobs:
           repository: r3dact3d/gitops
           path: gitops-tasks
           
-      - name: Download Artifacts from Cluster Deploy
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          workflow: deploy.yaml
-          name: ocp-artifact
-          path: ocp-artifact
+
           
       - name: Install OpenShift CLI tools
         uses: redhat-actions/openshift-tools-installer@v1
         with:
           openshift-install: "${{secrets.OCP_CLIENT_VERSION}}"
           oc: "${{secrets.OCP_CLIENT_VERSION}}"
+          
+      - name: Download Artifacts from Cluster Deploy
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: deploy.yaml
+          name: ocp-artifact
+          path: ocp-artifact
 
-      - name: Run ansible playbook
+      - name: Create GitOps 
         run: |
           cp ocp-artifact/auth/kubeconfig $GITHUB_WORKSPACE/kubeconfig
           export KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig
