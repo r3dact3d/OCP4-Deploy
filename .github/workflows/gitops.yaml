@@ -14,25 +14,29 @@ jobs:
     name: GitOps Day2 Tasks
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout GitOps external repo
+        uses: actions/checkout@v2
+        with:
+          repository: r3dact3d/gitops
+          path: gitops-tasks
+          
       - name: Download Artifacts from Cluster Deploy
         uses: dawidd6/action-download-artifact@v2
         with:
           workflow: deploy.yaml
           name: ocp-artifact
           path: ocp-artifact
-      
-      - uses: actions/checkout@main
-      - name: Get Infra ID
-        run: |
-          export infraID=`cat ocp-artifact/metadata.json | jq -r .infraID`
-          echo $infraID
-          perl -pi -e "s/{{ infraID }}/$infraID/g" infra-machineset.yaml
-          perl -pi -e 's/{{ regionID }}/${{ secrets.AWS_REGION }}/g' infra-machineset.yaml
-          cat infra-machineset.yaml
+          
+      - name: Install OpenShift CLI tools
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          openshift-install: "${{secrets.OCP_CLIENT_VERSION}}"
+          oc: "${{secrets.OCP_CLIENT_VERSION}}"
 
-       
-#      - name: Checkout GitOps external repo
-#        uses: actions/checkout@v2
-#        with:
-#          repository: r3dact3d/gitops
-#          path: gitops-tasks
+      - name: Run ansible playbook
+        run: |
+          cp ocp-artifact/auth/kubeconfig $GITHUB_WORKSPACE/kubeconfig
+          export KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig
+          oc create -f gitops-tasks/blinker19/cluster.yaml
+      
+
