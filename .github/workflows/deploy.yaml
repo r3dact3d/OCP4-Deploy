@@ -53,6 +53,7 @@ jobs:
           oc apply -f cluster-oauth.yaml
           sleep 300
           oc adm policy add-cluster-role-to-user cluster-admin ${{ secrets.OCP_ADMIN_USER }}
+          oc adm policy add-cluster-role-to-group cluster-admin cluster-admins
           
       - name: Get Infra ID
         run: |
