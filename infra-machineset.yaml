@@ -24,7 +24,8 @@ spec:
         labels:
           node-role.kubernetes.io/infra: "" 
       taints: 
-        - key: node-role.kubernetes.io/infra
+        - key: infra
+          value: reserved
           effect: NoSchedule
       providerSpec:
         value:
@@ -88,7 +89,8 @@ spec:
         labels:
           node-role.kubernetes.io/infra: "" 
       taints: 
-        - key: node-role.kubernetes.io/infra
+        - key: infra
+          value: reserved
           effect: NoSchedule
       providerSpec:
         value:
@@ -152,7 +154,8 @@ spec:
         labels:
           node-role.kubernetes.io/infra: "" 
       taints: 
-        - key: node-role.kubernetes.io/infra
+        - key: infra
+          value: reserved
           effect: NoSchedule
       providerSpec:
         value:
