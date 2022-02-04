@@ -28,7 +28,7 @@ NOTE: *fork* or *clone* repo so that you can use Your own GitHub Secrets and wor
 
 image::https://github.com/r3dact3d/OCP4-Deploy/actions/workflows/deploy.yaml/badge.svg[link="https://github.com/r3dact3d/OCP4-Deploy/actions/workflows/deploy.yaml"]
 
-NOTE: You can now check the Actions to watch/check the status of the deployment.  Also, the latest stable version of OpenShift 4 will be deployed.  This can be updated or changed in the workflow deploy file.
+NOTE: You can now check the Actions to watch/check the status of the deployment.  
 
 ==== Actions
 
@@ -43,6 +43,11 @@ Running Deploy workflow will automatically kick off.
 .. Uses DEV_PASS for andrew the developer
 . Install GitOps Operator
 .. Sets admin password for console to ADMIN_PASS
+. Adds MachineSet for infra nodes
+
+On completion of Deploy workflow, the GitOps-Tasks workflow will automatically start.
+
+. Creates argoCD applications from r3dact3d/gitops/main/blinker19/cluster.yaml
 
 ==== Important
 
