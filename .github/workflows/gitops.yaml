@@ -31,6 +31,7 @@ jobs:
         run: |
           cp ocp-artifact/auth/kubeconfig $GITHUB_WORKSPACE/kubeconfig
           export KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig
+          oc adm policy add-cluster-role-to-user cluster-admin -z openshift-gitops-argocd-application-controller
           oc create -f https://raw.githubusercontent.com/r3dact3d/gitops/main/blinker19/cluster.yaml
           sleep 120
           oc adm policy add-cluster-role-to-user cluster-admin -z openshift-gitops-argocd-application-controller
