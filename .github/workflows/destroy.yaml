@@ -16,7 +16,7 @@ jobs:
       - name: Download OCP Cluster Artifacts
         uses: dawidd6/action-download-artifact@v2.15.0
         with:
-          github_token: ${{secrets.GITHUB_TOKEN}}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           workflow: deploy.yaml
 #          workflow_conclusion: failure
           branch: main
