@@ -12,12 +12,12 @@ NOTE: *fork* or *clone* repo so that you can use Your own GitHub Secrets and wor
 
 === To deploy OCP4.x
 
-. Ensure GitHub Secrets are created and up-to-date
+. Ensure GitHub Repository Secrets are created and up-to-date - (do not create environment secrets, do create repository secrets)
 .. OCP_ADMIN_USER is the cluster admin username
 .. OCP_ADMIN_PASS 
 .. OCP_DEV_USER
 .. OCP_DEV_PASS 
-.. OCP_BASE_DOMAIN is the top level route53 domain
+.. OCP_BASE_DOMAIN is the top level route53 domain and does NOT require a leading dot
 .. OCP_CLUSTER_NAME
 .. OCP_CLIENT_VERSION will be the version of OpenShift "4", "4.7", or "4.9.9"
 .. RED_HAT_PULLSECRET is the required Red Hat creds for their repositories
