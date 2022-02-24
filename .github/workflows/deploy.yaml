@@ -76,24 +76,6 @@ jobs:
           echo "----------------------------"
 
 #          oc set data secret openshift-gitops-cluster -n openshift-gitops admin.password=${{ secrets.ADMIN_PASS }}
-#      - name: Setup GitHub IDP
-#        run: |
-#          export KUBECONFIG=ocp-artifact/auth/kubeconfig
-#          oc get nodes
-#          oc create secret generic github-client-secret --from-literal=clientSecret=${{ secrets.CLIENT_SECRET }} -n openshift-config
-#          oc apply -f idp-oauth.yaml
-#          oc adm policy add-cluster-role-to-user cluster-admin ${{ secrets.CLUSTER_ADMIN }}
-#          oc delete secrets kubeadmin -n kube-system --ignore-not-found=true
-
-#      - name: Deploy ArgoCD
-#        run: |
-#          export KUBECONFIG=ocp-artifact/auth/kubeconfig
-#          oc create namespace argocd
-#          oc apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-#          oc patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
-#          curl -sSL -o ~/ https://github.com/argoproj/argo-cd/releases/download/v1.7.14/argocd-linux-amd64
-#          chmod +x argocd
-
 
 #      - name: Setup Red Hat Advanced Cluster Manager in GitOps
 #        run: |
