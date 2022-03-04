@@ -64,10 +64,8 @@ This will kick off the destroy workflow, pulling the artifact from deploy workfl
 
 == TODO
 
-* Add OCP openshift-installer version as variable
-
-
-
+* Add node sizing templates
+* cost management operator
 
 NOTE: GitHub IDP is disabled currently
 
