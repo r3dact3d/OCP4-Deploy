@@ -2,7 +2,7 @@
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler
 metadata:
-  name: infra-machine-autoscaler
+  name: infra-machine-autoscaler-a
   namespace: openshift-machine-api
 spec:
   minReplicas: 0
@@ -16,7 +16,7 @@ spec:
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler
 metadata:
-  name: infra-machine-autoscaler
+  name: infra-machine-autoscaler-b
   namespace: openshift-machine-api
 spec:
   minReplicas: 0
@@ -30,7 +30,7 @@ spec:
 apiVersion: autoscaling.openshift.io/v1beta1
 kind: MachineAutoscaler
 metadata:
-  name: infra-machine-autoscaler
+  name: infra-machine-autoscaler-c
   namespace: openshift-machine-api
 spec:
   minReplicas: 0
