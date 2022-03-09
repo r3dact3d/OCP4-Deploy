@@ -64,7 +64,8 @@ jobs:
           perl -pi -e 's/{{ regionID }}/${{ secrets.AWS_REGION }}/g' infra-machineset.yaml
           cat infra-machineset.yaml
           oc create -f infra-machineset.yaml -n openshift-machine-api
-          oc creaate -f infra-machineset-autoscaler.yaml -n openshift-machine-api
+          oc create -f infra-machineautoscaler.yaml -n openshift-machine-api
+          oc create -f worker-machineautoscaler.yaml -n openshift-machine-api
           oc create -f cluster-autoscaler.yaml
           
     
