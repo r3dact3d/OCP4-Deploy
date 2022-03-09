@@ -62,7 +62,10 @@ jobs:
           echo $infraID
           perl -pi -e "s/{{ infraID }}/$infraID/g" infra-machineset.yaml
           perl -pi -e 's/{{ regionID }}/${{ secrets.AWS_REGION }}/g' infra-machineset.yaml
-          cat infra-machineset.yaml
+          perl -pi -e "s/{{ infraID }}/$infraID/g" infra-machineautoscaler.yaml
+          perl -pi -e 's/{{ regionID }}/${{ secrets.AWS_REGION }}/g' infra-machineautoscaler.yaml
+          perl -pi -e "s/{{ infraID }}/$infraID/g" worker-machineautoscaler.yaml
+          perl -pi -e 's/{{ regionID }}/${{ secrets.AWS_REGION }}/g' worker-machineautoscaler.yaml
           oc create -f infra-machineset.yaml -n openshift-machine-api
           oc create -f infra-machineautoscaler.yaml -n openshift-machine-api
           oc create -f worker-machineautoscaler.yaml -n openshift-machine-api
