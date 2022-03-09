@@ -1,0 +1,41 @@
+---
+apiVersion: autoscaling.openshift.io/v1beta1
+kind: MachineAutoscaler
+metadata:
+  name: worker-machine-autoscaler-a
+  namespace: openshift-machine-api
+spec:
+  minReplicas: 0
+  maxReplicas: 1
+  scaleTargetRef:
+    apiVersion: machine.openshift.io/v1beta1
+    kind: MachineSet
+    name: {{ infraID }}-worker-{{ regionID }}a
+
+---
+apiVersion: autoscaling.openshift.io/v1beta1
+kind: MachineAutoscaler
+metadata:
+  name: worker-machine-autoscaler-b
+  namespace: openshift-machine-api
+spec:
+  minReplicas: 0
+  maxReplicas: 1
+  scaleTargetRef:
+    apiVersion: machine.openshift.io/v1beta1
+    kind: MachineSet
+    name: {{ infraID }}-worker-{{ regionID }}b
+    
+---
+apiVersion: autoscaling.openshift.io/v1beta1
+kind: MachineAutoscaler
+metadata:
+  name: worker-machine-autoscaler-c
+  namespace: openshift-machine-api
+spec:
+  minReplicas: 0
+  maxReplicas: 1
+  scaleTargetRef:
+    apiVersion: machine.openshift.io/v1beta1
+    kind: MachineSet
+    name: {{ infraID }}-worker-{{ regionID }}c
