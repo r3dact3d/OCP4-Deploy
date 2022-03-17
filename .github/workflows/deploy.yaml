@@ -45,7 +45,6 @@ jobs:
       - name: Setup HTPasswd IDP
         run: |
           export KUBECONFIG=ocp-artifact/auth/kubeconfig
-          oc apply -f gitops-operator.yaml -n openshift-operators
           echo "Creating htpasswd file"
           htpasswd -c -b -B htpasswd ${{ secrets.OCP_ADMIN_USER }} ${{ secrets.OCP_ADMIN_PASS }}
           htpasswd -b -B htpasswd ${{ secrets.OCP_DEV_USER }} ${{ secrets.OCP_DEV_PASS }}
@@ -68,21 +67,4 @@ jobs:
           perl -pi -e 's/{{ regionID }}/${{ secrets.AWS_REGION }}/g' worker-machineautoscaler.yaml
           oc create -f infra-machineset.yaml -n openshift-machine-api
           oc create -f infra-machineautoscaler.yaml -n openshift-machine-api
-          oc create -f worker-machineautoscaler.yaml -n openshift-machine-api
-              
-
-          echo "----------------------------"
-          echo "Your cluster API URL is:"
-          oc whoami --show-server
-          echo "----------------------------"
-          echo "Your cluster console URL is:"
-          oc whoami --show-console
-          echo "----------------------------"
-
-#          oc set data secret openshift-gitops-cluster -n openshift-gitops admin.password=${{ secrets.ADMIN_PASS }}
-
-#      - name: Setup Red Hat Advanced Cluster Manager in GitOps
-#        run: |
-#          export KUBECONFIG=ocp-artifact/auth/kubeconfig
-#          oc create -f https://raw.githubusercontent.com/r3dact3d/gitops/ocp4/acm_build1/cluster.yaml
-
+          oc create -f worker-machineautoscaler.yaml -n openshift-machine-api 
