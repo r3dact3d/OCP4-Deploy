@@ -41,5 +41,5 @@ jobs:
           sleep 300
           oc project openshift-gitops
           oc adm policy add-cluster-role-to-user cluster-admin -z openshift-gitops-argocd-application-controller
-          cd $GITHUB_WORKSPACE/gitops/appsets
-          for appset in $(ls);do oc create -f $appset;done
+    #      cd $GITHUB_WORKSPACE/gitops/appsets
+    #      for appset in $(ls);do oc create -f $appset;done
