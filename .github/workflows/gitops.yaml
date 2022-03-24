@@ -37,7 +37,7 @@ jobs:
         run: |
           cp ocp-artifact/auth/kubeconfig $GITHUB_WORKSPACE/kubeconfig
           export KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig
-          oc apply -f https://raw.githubusercontent.com/r3dact3d/gitops/main/gitops-cluster/gitops-operator.yaml -n openshift-operators -n openshift-operators
+          oc apply -f https://raw.githubusercontent.com/r3dact3d/gitops/main/gitops-cluster/gitops-operator.yaml
           sleep 300
           oc project openshift-gitops
           oc adm policy add-cluster-role-to-user cluster-admin -z openshift-gitops-argocd-application-controller
