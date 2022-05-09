@@ -1,0 +1,58 @@
+name: Deploy ROSA cluster
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'deploy.md'
+  workflow_dispatch:
+
+jobs:
+  Setup:
+    name: Setup OpenShift ROSA Binary
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - name: Setup Working Directory for OCP Install
+        run: |
+          wget -O rosa.tar.gz https://mirror.openshift.com/pub/openshift-v4/clients/rosa/latest/rosa-linux.tar.gz
+          tar -xvf rosa.tar.gz
+          mv rosa /usr/local/bin
+          python -m pip install awscli
+
+      - name: Init ROSA
+        run: |
+          /usr/local/bin/rosa login --token="$RED_HAT_ROSA_TOKEN"
+          /usr/local/bin/rosa init
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          RED_HAT_ROSA_TOKEN: ${{ secrets.RED_HAT_ROSA_TOKEN }}
+
+      - name: Create ROSA cluster with STS
+        run: |
+          /usr/local/bin/rosa create account-roles --mode auto -y
+          /usr/local/bin/rosa create cluster --cluster-name ${OCP_CLUSTER_NAME} --multi-az --version ${OCP_CLUSTER_VERSION} --channel-group stable --enable-autoscaling --min-replicas 3 --max-replicas 6 --sts --mode auto
+          /usr/local/bin/rosa create operator-roles --mode auto -y --cluster ${OCP_CLUSTER_NAME}
+          /usr/local/bin/rosa create oidc-provider --mode auto -y --cluster ${OCP_CLUSTER_NAME}
+          /usr/local/bin/rosa logs install --cluster ${OCP_CLUSTER_NAME} --watch
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          RED_HAT_ROSA_TOKEN: ${{ secrets.RED_HAT_ROSA_TOKEN }}
+          OCP_CLUSTER_NAME: ${{ secrets.OCP_CLUSTER_NAME }}
+          OCP_CLUSTER_VERSION: ${{ secrets.OCP_CLUSTER_VERSION }}
+
+      - name: Add Custom Tags to AWS Resources
+        run: |
+          bash aws-resource-tagging.sh
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          RED_HAT_ROSA_TOKEN: ${{ secrets.RED_HAT_ROSA_TOKEN }}
+          CUSTOM_TAGS: ${{ secrets.CUSTOM_TAGS }}
+          OCP_CLUSTER_NAME: ${{ secrets.OCP_CLUSTER_NAME }}
