@@ -6,6 +6,13 @@ on:
     paths:
       - 'deploy.md'
   workflow_dispatch:
+  
+env: 
+  AWS_REGION: us-east-2
+  OCP_CLUSTER_NAME: blinky
+  OCP_VERSION: 4.10.11
+  CUSTOM_TAGS: rosa_provison=true,deleteifseen=uhhuh,role=test
+
 
 jobs:
   Setup:
@@ -33,10 +40,10 @@ jobs:
       - name: Create ROSA cluster with STS
         run: |
           /usr/local/bin/rosa create account-roles --mode auto -y
-          /usr/local/bin/rosa create cluster --cluster-name ${OCP_CLUSTER_NAME} --multi-az --version ${OCP_CLUSTER_VERSION} --channel-group stable --enable-autoscaling --min-replicas 3 --max-replicas 6 --sts --mode auto
-          /usr/local/bin/rosa create operator-roles --mode auto -y --cluster ${OCP_CLUSTER_NAME}
-          /usr/local/bin/rosa create oidc-provider --mode auto -y --cluster ${OCP_CLUSTER_NAME}
-          /usr/local/bin/rosa logs install --cluster ${OCP_CLUSTER_NAME} --watch
+          /usr/local/bin/rosa create cluster --cluster-name ${{ env.OCP_CLUSTER_NAME }} --multi-az --version ${{ env.OCP_VERSION }} --channel-group stable --enable-autoscaling --min-replicas 3 --max-replicas 6 --region ${{ env.AWS_REGION  }} --sts --mode auto
+          /usr/local/bin/rosa create operator-roles --mode auto -y --cluster ${{ env.OCP_CLUSTER_NAME }}
+          /usr/local/bin/rosa create oidc-provider --mode auto -y --cluster ${{ env.OCP_CLUSTER_NAME }}
+          /usr/local/bin/rosa logs install --cluster ${{ env.OCP_CLUSTER_NAME }} --watch
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
