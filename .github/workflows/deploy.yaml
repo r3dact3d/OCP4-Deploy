@@ -73,4 +73,5 @@ jobs:
           oc create -f infra-machineset.yaml -n openshift-machine-api
           oc create -f infra-machineautoscaler.yaml -n openshift-machine-api
           oc create -f worker-machineautoscaler.yaml -n openshift-machine-api 
+          oc create -f cluster-autoscaler.yaml
       
