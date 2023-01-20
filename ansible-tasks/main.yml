@@ -33,9 +33,6 @@
         register: subnet_info
         amazon.aws.ec2_vpc_subnet_info:
           region: "{{ region }}"
-          filters:
-            vpc-id: aws_vpc_id
-            
 
       - name: Set blank fact
         ansible.builtin.set_fact:
