@@ -28,8 +28,9 @@ jobs:
           
       - name: Run ansible playbook
         run: |
+          
           #ansible-playbook ansible-tasks/main.yml -e "ansible_python_interpreter=`which python3`" 
-          ansible-playbook ansible-tasks/main.yml
+          ansible-playbook ansible-tasks/main.yml -e "ansible_python_interpreter=`which python`"
      
 
 #      - name: Install OpenShift CLI tools
