@@ -28,9 +28,9 @@
       - name: Get subnet facts
         register: subnet_info
         loop:
-          - '*private-us-east-2a'
-          - '*private-us-east-2b'
-          - '*private-us-east-2c'
+          - '\*private-us-east-2a'
+          - '\*private-us-east-2b'
+          - '\*private-us-east-2c'
         amazon.aws.ec2_vpc_subnet_info:
           filters:
             vpc-id: aws_vpc_id
