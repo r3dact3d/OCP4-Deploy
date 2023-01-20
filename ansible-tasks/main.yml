@@ -26,24 +26,26 @@
           aws_vpc_id: "{{ vpc_info.vpcs[0].id }}"
           
       - name: Print VPC ID
-        debug:
+        ansible.builtin.debug:
           var: aws_vpc_id
         
       - name: Get subnet facts
         register: subnet_info
-        #loop:
-          #- '\*private-us-east-2a'
-          #- '\*private-us-east-2b'
-          #- '\*private-us-east-2c'
         amazon.aws.ec2_vpc_subnet_info:
+          region: "{{ region }}"
           filters:
             vpc-id: aws_vpc_id
-            #"tag:Name": "{{ item }}"
             
 
-#      - name: Collect subnet ids
-#        set_fact:
-#          subnet_ids: "{{ subnet_info.subnets|map(attribute='id')|list }}"
+      - name: Set blank fact
+        ansible.builtin.set_fact:
+          vpc_subnet_list: []
+          
+      - name: Collect subnet ids
+        when: subnet_info.subnets[0] is defined
+        loop: "{{ subnet_info.subnets }}"
+        ansible.builtin.set_fact:
+          subnet_ids: "{{ vpc_subnet_list }} + [ '{{ item.subnet_id }}' ]"
           
       - name: Print subnet ids
         debug:
