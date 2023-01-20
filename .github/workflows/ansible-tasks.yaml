@@ -1,42 +1,36 @@
-name: Ansible-Tasks
+name: 'Ansible GitHub Actions'
 on:
-  workflow_run:
-    workflows:
-      - Deploy
-    types:
-      - completed
-    branches:
-      - main
-      - master
   workflow_dispatch:
 
 jobs:
-  Setup:
-    name: Run Ansible Playbook against new OCP4 cluster
+  Ansible:
+    name: 'Ansible'
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout ocp4-ansible-roles external repo
-        uses: actions/checkout@v2
-        with:
-          repository: r3dact3d/OpenShift4-Ansible-Roles
-          path: ansible-tasks
 
-      - name: Download Artifacts from Cluster Deploy
-        uses: dawidd6/action-download-artifact@v2
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v3
+        
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          workflow: deploy.yaml
-          name: ocp-artifact
-          path: ocp-artifact
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Install Python Dependencies
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then
-            pip install -r requirements.txt
-          fi
-          if [ -f ansible-tasks/requirements.txt ]; then
-            pip install -r ansible-tasks/requirements.txt
-          fi
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          
+      - name: Run ansible playbook
+        run: |
+          ansible-playbook infra-setup/aws-infra.yaml -e "ansible_python_interpreter=`which python3`" 
+          ansible-playbook infra-setup/aws-infra.yaml -e "ansible_python_interpreter=`which python3`" --tags create_ec2
+          ansible-playbook infra-setup/aws-infra.yaml -e "ansible_python_interpreter=`which python3`"
 
       - name: Install OpenShift CLI tools
         uses: redhat-actions/openshift-tools-installer@v1
