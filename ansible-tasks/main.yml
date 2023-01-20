@@ -49,4 +49,4 @@
           
       - name: Print subnet ids
         debug:
-          var: subnet_info
+          var: subnet_ids
