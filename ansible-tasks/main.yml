@@ -23,7 +23,7 @@
       - name: Collect VPC ID
         when: vpc_info.vpcs[0] is defined
         ansible.builtin.set_fact:
-          aws_vpc_id: "{{ vpc.vpcs[0].id }}"
+          aws_vpc_id: "{{ vpc_info.vpcs[0].id }}"
         
       - name: Get subnet facts
         register: subnet_info
