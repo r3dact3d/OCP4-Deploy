@@ -28,18 +28,17 @@ jobs:
           
       - name: Run ansible playbook
         run: |
-          ansible-playbook infra-setup/aws-infra.yaml -e "ansible_python_interpreter=`which python3`" 
-          ansible-playbook infra-setup/aws-infra.yaml -e "ansible_python_interpreter=`which python3`" --tags create_ec2
-          ansible-playbook infra-setup/aws-infra.yaml -e "ansible_python_interpreter=`which python3`"
+          ansible-playbook ansible-tasks/main.yml -e "ansible_python_interpreter=`which python3`" 
+     
 
-      - name: Install OpenShift CLI tools
-        uses: redhat-actions/openshift-tools-installer@v1
-        with:
-          openshift-install: "${{secrets.OCP_CLIENT_VERSION}}"
-          oc: "${{secrets.OCP_CLIENT_VERSION}}"
+#      - name: Install OpenShift CLI tools
+#        uses: redhat-actions/openshift-tools-installer@v1
+#        with:
+#          openshift-install: "${{secrets.OCP_CLIENT_VERSION}}"
+#          oc: "${{secrets.OCP_CLIENT_VERSION}}"
 
-      - name: Run ansible playbook
-        run: |
-          cp ocp-artifact/auth/kubeconfig $GITHUB_WORKSPACE/kubeconfig
-          export KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig
-          ansible-playbook ansible-tasks/main.yaml
+#      - name: Run ansible playbook
+#        run: |
+#          cp ocp-artifact/auth/kubeconfig $GITHUB_WORKSPACE/kubeconfig
+#          export KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig
+#          ansible-playbook ansible-tasks/main.yaml
