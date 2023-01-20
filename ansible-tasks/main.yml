@@ -1,0 +1,8 @@
+---
+
+- name: AWS playbook
+  hosts: localhost
+  connection: local
+  gather_facts: False
+  collections:
+    - amazon.aws
