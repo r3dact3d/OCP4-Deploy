@@ -27,19 +27,20 @@
         
       - name: Get subnet facts
         register: subnet_info
-        loop:
-          - '\*private-us-east-2a'
-          - '\*private-us-east-2b'
-          - '\*private-us-east-2c'
+        #loop:
+          #- '\*private-us-east-2a'
+          #- '\*private-us-east-2b'
+          #- '\*private-us-east-2c'
         amazon.aws.ec2_vpc_subnet_info:
           filters:
             vpc-id: aws_vpc_id
-            "tag:Name": "{{ item }}"
+            #"tag:Name": "{{ item }}"
+            
 
-      - name: Collect subnet ids
-        set_fact:
-          subnet_ids: "{{ subnet_info.subnets|map(attribute='id')|list }}"
+#      - name: Collect subnet ids
+#        set_fact:
+#          subnet_ids: "{{ subnet_info.subnets|map(attribute='id')|list }}"
           
       - name: Print subnet ids
         debug:
-          var: subnet_ids
+          var: subnet_info
