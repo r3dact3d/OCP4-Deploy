@@ -24,13 +24,13 @@ jobs:
       - name: Install Python Dependencies
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f ansible-tasks/requirements.txt ]; then pip install -r ansible-tasks/requirements.txt; fi
           
       - name: Run ansible playbook
         run: |
           
           #ansible-playbook ansible-tasks/main.yml -e "ansible_python_interpreter=`which python3`" 
-          ansible-playbook ansible-tasks/main.yml -e "ansible_python_interpreter=`which python`"
+          ansible-playbook ansible-tasks/main.yml
      
 
 #      - name: Install OpenShift CLI tools
