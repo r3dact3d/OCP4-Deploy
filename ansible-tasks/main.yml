@@ -6,3 +6,40 @@
   gather_facts: False
   collections:
     - amazon.aws
+    
+  vars:
+    region: us-east-2
+
+  tasks:
+    - name: Facts block
+      tags: always    
+      block:
+  
+      - name: Get VPC facts
+        register: vpc_info
+        amazon.aws.ec2_vpc_net_info:
+          region: "{{ region }}"
+          
+      - name: Collect VPC ID
+        when: vpc_info.vpcs[0] is defined
+        ansible.builtin.set_fact:
+          aws_vpc_id: "{{ vpc.vpcs[0].id }}"
+        
+      - name: Get subnet facts
+        register: subnet_info
+        loop:
+          - '*private-us-east-2a'
+          - '*private-us-east-2b'
+          - '*private-us-east-2c'
+        amazon.aws.ec2_vpc_subnet_info:
+          filters:
+            vpc-id: aws_vpc_id
+            "tag:Name": "{{ item }}"
+
+      - name: Collect subnet ids
+        set_fact:
+          subnet_ids: "{{ subnet_info.subnets|map(attribute='id')|list }}"
+          
+      - name: Print subnet ids
+        debug:
+          var: subnet_ids
