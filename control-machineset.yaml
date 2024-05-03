@@ -1,0 +1,62 @@
+---
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  labels:
+    machine.openshift.io/cluster-api-cluster: {{ infraID }}
+  name: {{ infraID }}-control-{{ regionID }}a
+  namespace: openshift-machine-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-cluster: {{ infraID }}
+      machine.openshift.io/cluster-api-machineset: {{ infraID }}-control-{{ regionID }}a
+  template:
+    metadata:
+      labels:
+        machine.openshift.io/cluster-api-cluster: {{ infraID }}
+        machine.openshift.io/cluster-api-machineset: {{ infraID }}-control-{{ regionID }}a
+    spec:
+      metadata:
+        labels:
+          aap_node_type: control
+      taints: 
+        - key: dedicated
+          value: AutomationController
+          effect: NoSchedule
+      providerSpec:
+        value:
+          ami:
+            id: ami-03d9208319c96db0c 
+          apiVersion: awsproviderconfig.openshift.io/v1beta1
+          blockDevices:
+            - ebs:
+                iops: 0
+                volumeSize: 120
+                volumeType: gp2
+          credentialsSecret:
+            name: aws-cloud-credentials
+          deviceIndex: 0
+          iamInstanceProfile:
+            id: {{ infraID }}-worker-profile 
+          instanceType: m4.large
+          kind: AWSMachineProviderConfig
+          placement:
+            availabilityZone: {{ regionID }}a
+            region: {{ regionID }}
+          securityGroups:
+            - filters:
+                - name: tag:Name
+                  values:
+                    - {{ infraID }}-worker-sg 
+          subnet:
+            filters:
+              - name: tag:Name
+                values:
+                  - {{ infraID }}-private-{{ regionID }}a 
+          tags:
+            - name: kubernetes.io/cluster/{{ infraID }}
+              value: owned
+          userDataSecret:
+            name: worker-user-data
