@@ -43,11 +43,17 @@ Running Deploy workflow will automatically kick off.
 .. Uses DEV_PASS for andrew the developer
 . Install GitOps Operator
 .. Sets admin password for console to ADMIN_PASS
-. Adds MachineSet for infra nodes
+. Adds MachineSet
+.. labels infra nodes
+.. labels control worker node for Automation Controller
+. Enables cluster and machine autoscaling
+.. Creates cluster autoscaling config
+.. Creates autoscaling groups from workers and infra machines
+. Creates an S3 bucket for AAP and the namespace for the operator
 
 On completion of Deploy workflow, the GitOps-Tasks workflow will automatically start.
 
-. Creates argoCD applications from r3dact3d/gitops/main/blinker19/cluster.yaml
+. Update with Day2 and Applications appset pointing to examples
 
 ==== Important
 
