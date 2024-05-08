@@ -1,34 +1,56 @@
 = Repo for deploying OCP to AWS
 
-NOTE: *fork* or *clone* repo so that you can use Your own GitHub Secrets and worklflow.
+NOTE: Please *fork* or *clone* this repository so that you can use your own GitHub Secrets and workflow.
 
-== Content
+== Overview
 
-* <<Workflow, Workflow>>
-* <<Important, Important>>
-* <<TODO, TODO>>
+This repository provides the necessary scripts and instructions for deploying OpenShift clusters on AWS. It is designed for system administrators and DevOps engineers who are familiar with AWS and OpenShift environments.
 
-== Workflow
+== Table of Contents
 
-=== To deploy OCP4.x
+* <<Workflow, Deployment Workflow>>
+* <<Requirements, Prerequisites and Requirements>>
+* <<Configuration, Configuration Secrets>>
+* <<Troubleshooting, Troubleshooting Common Issues>>
+* <<Contributing, How to Contribute>>
 
-. Ensure GitHub Repository Secrets are created and up-to-date - (do not create environment secrets, do create repository secrets)
-.. OCP_ADMIN_USER is the cluster admin username
-.. OCP_ADMIN_PASS 
-.. OCP_DEV_USER
-.. OCP_DEV_PASS 
-.. OCP_BASE_DOMAIN is the top level route53 domain and does NOT require a leading dot
-.. OCP_CLUSTER_NAME
-.. OCP_CLIENT_VERSION will be the version of OpenShift "4", "4.7", or "4.9.9"
-.. RED_HAT_PULLSECRET is the required Red Hat creds for their repositories
-.. AWS_ACCESS_KEY_ID is the AWS Access Key
-.. AWS_SECRET_ACCESS_KEY is the AWS Secret Access key
-.. AWS_REGION
-. Click Deploy button below and run workflow
+== Deployment Workflow
+
+=== Deploying OpenShift 4.x
+
+. *Prerequisites*:
+.. Ensure that all GitHub Repository Secrets are created and up-to-date (repository secrets only, no environment secrets required).
+.. Review and understand each secret required for deployment listed in the <<Configuration, Configuration Secrets>> section.
+
+. *Deployment Steps*:
+.. Click the 'Deploy' button below to initiate the deployment workflow.
+.. Monitor the workflow progress and verify deployment via the AWS and OpenShift consoles.
 
 image::https://github.com/r3dact3d/OCP4-Deploy/actions/workflows/deploy.yaml/badge.svg[link="https://github.com/r3dact3d/OCP4-Deploy/actions/workflows/deploy.yaml"]
 
-NOTE: You can now check the Actions to watch/check the status of the deployment.  
+== Prerequisites and Requirements
+
+Ensure you have the following before starting the deployment:
+
+* Access to an AWS account with administrative privileges.
+* A GitHub account for fork or clone operations.
+* Basic understanding of YAML and shell scripting.
+
+== Configuration Secrets
+
+Here's a list of all required GitHub secrets for the deployment:
+
+- `OCP_ADMIN_USER`: Cluster admin username.
+- `OCP_ADMIN_PASS`: Cluster admin password.
+- `OCP_DEV_USER`: Development user username.
+- `OCP_DEV_PASS`: Development user password.
+- `OCP_BASE_DOMAIN`: Top-level domain for Route53, does not require a leading dot.
+- `OCP_CLUSTER_NAME`: Name of the OpenShift cluster.
+- `OCP_CLIENT_VERSION`: OpenShift client version, e.g., "4", "4.7", or "4.9.9".
+- `RED_HAT_PULLSECRET`: Red Hat credentials for accessing Red Hat repositories.
+- `AWS_ACCESS_KEY_ID`: AWS Access Key.
+- `AWS_SECRET_ACCESS_KEY`: AWS Secret Access Key.
+- `AWS_REGION`: AWS Region where the cluster will be deployed.
 
 ==== Actions
 
@@ -67,6 +89,16 @@ On completion of Deploy workflow, the GitOps-Tasks workflow will automatically s
 image::https://github.com/r3dact3d/OCP4-Deploy/actions/workflows/destroy.yaml/badge.svg[link="https://github.com/r3dact3d/OCP4-Deploy/actions/workflows/destroy.yaml"]
 
 This will kick off the destroy workflow, pulling the artifact from deploy workflow automatically and destroying the AWS resources.
+
+== Troubleshooting Common Issues
+
+This section provides guidance on common issues that you might encounter during the deployment process, along with recommended solutions.
+
+== How to Contribute
+
+We welcome contributions! Please submit issues, enhancements, and pull requests through GitHub. For major changes, please open an issue first to discuss what you would like to change.
+
+Ensure to update tests as appropriate and maintain the quality of the deployment scripts.
 
 == TODO
 
