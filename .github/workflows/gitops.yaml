@@ -56,7 +56,8 @@ jobs:
             --from-literal=s3-access-key-id=${{secrets.AWS_ACCESS_KEY_ID}} \
             --from-literal=s3-secret-access-key=${{secrets.AWS_SECRET_ACCESS_KEY}} \
             --from-literal=s3-bucket-name=${{secrets.OCP_CLUSTER_NAME}}-aap-ha-db-bucket \
-            --from-literal=s3-region=${{secrets.AWS_REGION}} | oc apply -f -
+            --from-literal=s3-region=${{secrets.AWS_REGION}} 
+          oc apply -f s3-secret
           sleep 300
           oc project openshift-gitops
           oc adm policy add-cluster-role-to-user cluster-admin -z openshift-gitops-argocd-application-controller
