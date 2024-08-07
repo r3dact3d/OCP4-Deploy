@@ -40,7 +40,7 @@ Ensure you have the following before starting the deployment:
 
 Here's a list of all required GitHub secrets for the deployment:
 
-NOTE: There are multiple places to create secrets in GitHub, be sure to the *Actions* and *Repository Secrets* like this path [link="https://github.com/r3dact3d/OCP4-Deploy/settings/secrets/actions"]
+NOTE: There are multiple places to create secrets in GitHub, be sure to the *Actions* and *Repository Secrets* like this path link: https://github.com/r3dact3d/OCP4-Deploy/settings/secrets/actions[OCP4-Deploy/settings/secrets/actions]
 
 - `OCP_ADMIN_USER`: Cluster admin username.
 - `OCP_ADMIN_PASS`: Cluster admin password.
@@ -49,7 +49,7 @@ NOTE: There are multiple places to create secrets in GitHub, be sure to the *Act
 - `OCP_BASE_DOMAIN`: Top-level domain for Route53, does not require a leading dot.
 - `OCP_CLUSTER_NAME`: Name of the OpenShift cluster.
 - `OCP_CLIENT_VERSION`: OpenShift client version, e.g., "4", "4.7", or "4.9.9".
-- `RED_HAT_PULLSECRET`: Red Hat credentials for accessing Red Hat repositories. [link="https://console.redhat.com/openshift/install/pull-secret"]
+- `RED_HAT_PULLSECRET`: Red Hat credentials for accessing Red Hat repositories. link: https://console.redhat.com/openshift/install/pull-secret[Pull Secret]
 - `AWS_ACCESS_KEY_ID`: AWS Access Key.
 - `AWS_SECRET_ACCESS_KEY`: AWS Secret Access Key.
 - `AWS_REGION`: AWS Region where the cluster will be deployed.
