@@ -25,8 +25,8 @@ jobs:
       - name: Install OpenShift CLI tools
         uses: redhat-actions/openshift-tools-installer@v1
         with:
-          openshift-install: "${{secrets.OCP_CLIENT_VERSION}}"
-          oc: "${{secrets.OCP_CLIENT_VERSION}}"
+          openshift-install: "${{ secrets.OCP_CLIENT_VERSION }}"
+          oc: "${{ secrets.OCP_CLIENT_VERSION }}"
           
       - name: Get openshift-install flags
         run: openshift-install create --help
