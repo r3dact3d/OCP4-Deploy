@@ -30,7 +30,7 @@ spec:
       providerSpec:
         value:
           ami:
-            id: ami-03d9208319c96db0c 
+            id: ami-078e26f293629fe91
           apiVersion: awsproviderconfig.openshift.io/v1beta1
           blockDevices:
             - ebs:
@@ -95,7 +95,7 @@ spec:
       providerSpec:
         value:
           ami:
-            id: ami-03d9208319c96db0c 
+            id: ami-078e26f293629fe91
           apiVersion: awsproviderconfig.openshift.io/v1beta1
           blockDevices:
             - ebs:
@@ -160,7 +160,7 @@ spec:
       providerSpec:
         value:
           ami:
-            id: ami-03d9208319c96db0c 
+            id: ami-078e26f293629fe91
           apiVersion: awsproviderconfig.openshift.io/v1beta1
           blockDevices:
             - ebs:
