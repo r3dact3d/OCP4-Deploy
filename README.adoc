@@ -116,7 +116,7 @@ subnetid has changed - blinker-2k65w-private-us-east-2a > blinker-2k65w-subnet-p
 === AAP on OCP
 
 * Ansible Automation Platform CR
-*
+* [Custom Resources](https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/installing_on_openshift_container_platform/appendix-operator-crs_performance-considerations#operator-crs)
 
 === Stretch
 
