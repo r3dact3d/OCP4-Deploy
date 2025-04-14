@@ -104,6 +104,22 @@ Ensure to update tests as appropriate and maintain the quality of the deployment
 
 == TODO
 
+* Update the infra and control machinesets to account for the below recent changes
+
+```.bash
+security group ID has changed - blinker-2k65w-worker-sg > blinker-2k65w-node
+subnetid has changed - blinker-2k65w-private-us-east-2a > blinker-2k65w-subnet-private-us-east-2a (edited) 
+```
+
+* Check Monitoring stack for recent breaking changes
+
+=== AAP on OCP
+
+* Ansible Automation Platform CR
+*
+
+=== Stretch
+
 * Add node sizing templates
 * cost management operator
 
