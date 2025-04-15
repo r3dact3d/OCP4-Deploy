@@ -40,7 +40,7 @@ spec:
           deviceIndex: 0
           iamInstanceProfile:
             id: {{ infraID }}-worker-profile 
-          instanceType: m4.large
+          instanceType: m6i.xlarge
           kind: AWSMachineProviderConfig
           placement:
             availabilityZone: {{ regionID }}a
