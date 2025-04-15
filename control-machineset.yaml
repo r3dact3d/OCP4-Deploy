@@ -49,12 +49,12 @@ spec:
             - filters:
                 - name: tag:Name
                   values:
-                    - {{ infraID }}-worker-sg 
+                    - {{ infraID }}-node
           subnet:
             filters:
               - name: tag:Name
                 values:
-                  - {{ infraID }}-private-{{ regionID }}a 
+                  - {{ infraID }}-subnet-private-{{ regionID }}a 
           tags:
             - name: kubernetes.io/cluster/{{ infraID }}
               value: owned
