@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy OpenShift Container Platform on AWS
 on:
   push:
     branches:
@@ -55,7 +55,7 @@ jobs:
           htpasswd -c -b -B htpasswd ${{ secrets.OCP_ADMIN_USER }} ${{ secrets.OCP_ADMIN_PASS }}
           htpasswd -b -B htpasswd ${{ secrets.OCP_DEV_USER }} ${{ secrets.OCP_DEV_PASS }}
           oc create secret generic htpass-secret --from-file=htpasswd=htpasswd -n openshift-config --dry-run -o yaml | oc apply -f -
-          oc apply -f cluster-oauth.yaml
+          oc apply -f cluster-configs/cluster-oauth.yaml
           sleep 300
           oc adm policy add-cluster-role-to-user cluster-admin ${{ secrets.OCP_ADMIN_USER }}
           oc adm policy add-cluster-role-to-user cluster-admin -z openshift-gitops-argocd-application-controller
@@ -64,17 +64,17 @@ jobs:
         run: |
           export infraID=`cat ocp-artifact/metadata.json | jq -r .infraID`
           export KUBECONFIG=ocp-artifact/auth/kubeconfig
-          perl -pi -e "s/{{ infraID }}/$infraID/g" infra-machineset.yaml
-          perl -pi -e 's/{{ regionID }}/${{ secrets.AWS_REGION }}/g' infra-machineset.yaml
-          perl -pi -e "s/{{ infraID }}/$infraID/g" infra-machineautoscaler.yaml
-          perl -pi -e 's/{{ regionID }}/${{ secrets.AWS_REGION }}/g' infra-machineautoscaler.yaml
-          perl -pi -e "s/{{ infraID }}/$infraID/g" worker-machineautoscaler.yaml
-          perl -pi -e 's/{{ regionID }}/${{ secrets.AWS_REGION }}/g' worker-machineautoscaler.yaml
-          perl -pi -e "s/{{ infraID }}/$infraID/g" control-machineset.yaml
-          perl -pi -e 's/{{ regionID }}/${{ secrets.AWS_REGION }}/g' control-machineset.yaml
-          oc create -f infra-machineset.yaml -n openshift-machine-api
-          oc create -f control-machineset.yaml -n openshift-machine-api
-          oc create -f infra-machineautoscaler.yaml -n openshift-machine-api
-          oc create -f worker-machineautoscaler.yaml -n openshift-machine-api 
-          oc create -f cluster-autoscaler.yaml
-      
+          perl -pi -e "s/{{ infraID }}/$infraID/g" cluster-configs/infra-machineset.yaml
+          perl -pi -e 's/{{ regionID }}/${{ secrets.AWS_REGION }}/g' cluster-configs/infra-machineset.yaml
+          perl -pi -e "s/{{ infraID }}/$infraID/g" cluster-configs/infra-machineautoscaler.yaml
+          perl -pi -e 's/{{ regionID }}/${{ secrets.AWS_REGION }}/g' cluster-configs/infra-machineautoscaler.yaml
+          perl -pi -e "s/{{ infraID }}/$infraID/g" cluster-configs/worker-machineautoscaler.yaml
+          perl -pi -e 's/{{ regionID }}/${{ secrets.AWS_REGION }}/g' cluster-configs/worker-machineautoscaler.yaml
+          perl -pi -e "s/{{ infraID }}/$infraID/g" cluster-configs/control-machineset.yaml
+          perl -pi -e 's/{{ regionID }}/${{ secrets.AWS_REGION }}/g' cluster-configs/control-machineset.yaml
+          oc create -f infra-machineset.yaml -n cluster-configs/openshift-machine-api
+          oc create -f control-machineset.yaml -n cluster-configs/openshift-machine-api
+          oc create -f infra-machineautoscaler.yaml -n cluster-configs/openshift-machine-api
+          oc create -f worker-machineautoscaler.yaml -n cluster-configs/openshift-machine-api 
+          oc create -f cluster-configs/cluster-autoscaler.yaml
+
