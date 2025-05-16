@@ -1,4 +1,4 @@
-name: Destroy
+name: Destroy OCP4 Resources from AWS
 on:
   workflow_dispatch:
 
@@ -47,7 +47,7 @@ jobs:
           fi
         continue-on-error: true
 
-      - name: Create S3 bucket if it does not exist
-        if: steps.check-bucket.outcome == 'failure'
+      - name: Delete S3 bucket if it does exist
+        if: steps.check-bucket.outcome != 'failure'
         run: |
           aws s3 rb s3://${{secrets.OCP_CLUSTER_NAME}}-aap-ha-db-bucket --force
