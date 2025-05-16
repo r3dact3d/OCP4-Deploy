@@ -1,10 +1,5 @@
 name: Destroy
 on:
-  push:
-    branches:
-      - 'main'
-    paths:
-      - 'destroy.md'
   workflow_dispatch:
 
 jobs:

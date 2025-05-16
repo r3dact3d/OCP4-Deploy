@@ -1,10 +1,5 @@
 name: Deploy OpenShift Container Platform on AWS
 on:
-  push:
-    branches:
-      - 'main'
-    paths:
-      - 'deploy.md'
   workflow_dispatch:
 
 jobs:
