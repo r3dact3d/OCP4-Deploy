@@ -1,10 +1,5 @@
 name: Deploy ROSA cluster
 on:
-  push:
-    branches:
-      - 'main'
-    paths:
-      - 'deploy.md'
   workflow_dispatch:
   
 env: 
