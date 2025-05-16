@@ -38,6 +38,16 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Create AWS S3 Bucket for AAP HA DB
+      - name: Check if S3 bucket exists
+        id: check-bucket
+        run: |
+          if ! aws --region ${{ secrets.AWS_REGION }} s3api head-bucket --bucket ${{secrets.OCP_CLUSTER_NAME}}-aap-ha-db-bucket; then
+            echo "Bucket does not exist. Creating..."
+            exit 1
+          fi
+        continue-on-error: true
+
+      - name: Create S3 bucket if it does not exist
+        if: steps.check-bucket.outcome == 'failure'
         run: |
           aws s3 rb s3://${{secrets.OCP_CLUSTER_NAME}}-aap-ha-db-bucket --force
