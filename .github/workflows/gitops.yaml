@@ -2,7 +2,7 @@ name: GitOps-Tasks
 on:
   workflow_run:
     workflows:
-      - Deploy
+      - Deploy OpenShift Container Platform on AWS
     types:
       - completed
     branches:
